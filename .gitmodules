@@ -7,3 +7,6 @@
 [submodule "vendor/CavalierContours"]
 	path = vendor/CavalierContours
 	url = https://github.com/jbuckmccready/CavalierContours.git
+[submodule "vendor/vcpkg"]
+	path = vendor/vcpkg
+	url = https://github.com/microsoft/vcpkg.git
