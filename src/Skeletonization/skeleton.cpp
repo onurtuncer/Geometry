@@ -1,13 +1,7 @@
 #include <CGAL/Simple_cartesian.h>
 #include <CGAL/Surface_mesh.h>
 #include <CGAL/Mean_curvature_flow_skeletonization.h>
-#include <CGAL/boost/graph/properties.h>  // For CGAL::vertex_point property map
-#include <CGAL/boost/graph/graph_traits_Surface_mesh.h>  // For boost::graph_traits
-// #include <CGAL/IO/read_STL.h>  // For reading STL files
-#include <CGAL/IO/write_xyz_points.h>  // For writing point correspondences
-
 #include <fstream>
-
 typedef CGAL::Simple_cartesian<double>                        Kernel;
 typedef Kernel::Point_3                                       Point;
 typedef CGAL::Surface_mesh<Point>                             Triangle_mesh;
@@ -17,51 +11,48 @@ typedef Skeletonization::Skeleton                             Skeleton;
 typedef Skeleton::vertex_descriptor                           Skeleton_vertex;
 typedef Skeleton::edge_descriptor                             Skeleton_edge;
 
-int main(int argc, char* argv[]) {
-  if (argc < 2) {
-    std::cerr << "Usage: " << argv[0] << " <input.stl>" << std::endl;
-    return EXIT_FAILURE;
-  }
-
+int main(int argc, char* argv[])
+{
+  std::ifstream input((argc>1)?argv[1]:CGAL::data_file_path("meshes/elephant.off"));
   Triangle_mesh tmesh;
-  std::ifstream input(argv[1]);
   input >> tmesh;
-
-  if (!input || !CGAL::is_triangle_mesh(tmesh)) {
-    std::cerr << "Error: Invalid or non-triangulated STL file." << std::endl;
+  if (!CGAL::is_triangle_mesh(tmesh))
+  {
+    std::cout << "Input geometry is not triangulated." << std::endl;
     return EXIT_FAILURE;
   }
-
   Skeleton skeleton;
   Skeletonization mcs(tmesh);
-
+  // 1. Contract the mesh by mean curvature flow.
   mcs.contract_geometry();
+  // 2. Collapse short edges and split bad triangles.
   mcs.collapse_edges();
   mcs.split_faces();
+  // 3. Fix degenerate vertices.
   mcs.detect_degeneracies();
+  // Perform the above three steps in one iteration.
   mcs.contract();
+  // Iteratively apply step 1 to 3 until convergence.
   mcs.contract_until_convergence();
-
+  // Convert the contracted mesh into a curve skeleton and
+  // get the correspondent surface points
   mcs.convert_to_skeleton(skeleton);
-
   std::cout << "Number of vertices of the skeleton: " << boost::num_vertices(skeleton) << "\n";
   std::cout << "Number of edges of the skeleton: " << boost::num_edges(skeleton) << "\n";
-
   // Output all the edges of the skeleton.
   std::ofstream output("skel-sm.polylines.txt");
-  for (Skeleton_edge e : CGAL::make_range(edges(skeleton))) {
+  for(Skeleton_edge e : CGAL::make_range(edges(skeleton)))
+  {
     const Point& s = skeleton[source(e, skeleton)].point;
     const Point& t = skeleton[target(e, skeleton)].point;
-    output << "2 " << s << " " << t << "\n";
+    output << "2 "<< s << " " << t << "\n";
   }
   output.close();
-
   // Output skeleton points and the corresponding surface points
   output.open("correspondance-sm.polylines.txt");
-  for (Skeleton_vertex v : CGAL::make_range(vertices(skeleton)))
-    for (vertex_descriptor vd : skeleton[v].vertices)
-      output << "2 " << skeleton[v].point << "  " << get(CGAL::vertex_point, tmesh, vd) << "\n";
-
+  for(Skeleton_vertex v : CGAL::make_range(vertices(skeleton)))
+    for(vertex_descriptor vd : skeleton[v].vertices)
+      output << "2 " << skeleton[v].point << "  " << get(CGAL::vertex_point, tmesh, vd)  << "\n";
   return EXIT_SUCCESS;
 }
 

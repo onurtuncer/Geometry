@@ -1,3 +1,0 @@
-/home/melina/dev/Geometry/src/deneme/build/CMakeFiles/deneme.dir
-/home/melina/dev/Geometry/src/deneme/build/CMakeFiles/edit_cache.dir
-/home/melina/dev/Geometry/src/deneme/build/CMakeFiles/rebuild_cache.dir

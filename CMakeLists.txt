@@ -63,5 +63,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 
 add_subdirectory(${3RD_PARTY_DIR}/mcut)
-add_subdirectory(${SOURCE_DIR}/Delaunay)
 add_subdirectory(${3RD_PARTY_DIR}/CavalierContours)
+
+add_subdirectory(${SOURCE_DIR}/Delaunay)
+add_subdirectory(${SOURCE_DIR}/Skeletonization)

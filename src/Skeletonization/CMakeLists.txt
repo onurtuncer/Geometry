@@ -5,6 +5,8 @@ find_package(CGAL CONFIG REQUIRED)
 # Find and use Boost components
 find_package(Boost REQUIRED COMPONENTS graph)
 
+find_package(Eigen3 3.1.0 QUIET)
+include(CGAL_Eigen3_support)
 
 # Activate this property to "hide" targets (i.e. cgal) to the end user
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -17,27 +19,11 @@ set(src_files skeleton.cpp
 
 add_executable(${PROJECT_NAME} ${src_files})
 
-# Test the operating system
-if(UNIX AND NOT APPLE)
-    target_compile_definitions(${PROJECT_NAME} PUBLIC OS_PLATFORM_LINUX)
-elseif(WIN32)
-    target_compile_definitions(${PROJECT_NAME} PUBLIC OS_PLATFORM_WINDOWS)
-endif()
+target_link_libraries(${PROJECT_NAME} PUBLIC ${CGAL_LIBRARIES} ${CGAL_3RD_PARTY_LIBRARIES} Boost::graph 
+                                             CGAL::Eigen3_support)
 
-# if(LINUX)
-
-if(WIN32)
-    target_link_libraries(${PROJECT_NAME} PRIVATE Boost::graph CGAL::CGAL)
-else()
-    target_link_libraries(${PROJECT_NAME} PRIVATE  Boost::graph CGAL::CGAL)
-endif()
 
 target_include_directories(${PROJECT_NAME} PUBLIC  "${SOURCE_DIR}"
                                                   )
                                                
-# Set compiler options
-if(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
-else()
-    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic)
-endif()
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic)
