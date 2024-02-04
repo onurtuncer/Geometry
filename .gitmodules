@@ -1,12 +1,6 @@
-[submodule "vendor/cgal"]
-	path = vendor/cgal
-	url = https://github.com/CGAL/cgal.git
 [submodule "vendor/mcut"]
 	path = vendor/mcut
 	url = https://github.com/cutdigital/mcut
 [submodule "vendor/CavalierContours"]
 	path = vendor/CavalierContours
 	url = https://github.com/jbuckmccready/CavalierContours.git
-[submodule "vendor/vcpkg"]
-	path = vendor/vcpkg
-	url = https://github.com/microsoft/vcpkg.git

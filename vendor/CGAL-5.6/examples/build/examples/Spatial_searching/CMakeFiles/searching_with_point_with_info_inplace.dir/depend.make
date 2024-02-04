@@ -1,0 +1,2 @@
+# Empty dependencies file for searching_with_point_with_info_inplace.
+# This may be replaced when dependencies are built.

@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/wlop_simplify_and_regularize_point_set_example.dir/wlop_simplify_and_regularize_point_set_example.cpp.o -o wlop_simplify_and_regularize_point_set_example  /usr/lib/x86_64-linux-gnu/libgmpxx.so /usr/lib/x86_64-linux-gnu/libmpfr.so /usr/lib/x86_64-linux-gnu/libgmp.so 
