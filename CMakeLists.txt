@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15...3.25)
 
-project(GeometryPlayground LANGUAGES CXX)
+project(GeometryPlayground LANGUAGES C CXX)
 
 option (RELEASE          "Make a release build"                       OFF)
 option (DEBUG            "Make a debug build"                          ON)
@@ -11,6 +11,8 @@ set(3RD_PARTY_DIR       "${PROJECT_SOURCE_DIR}/vendor")
 
 set(CGAL_DIR            "${3RD_PARTY_DIR}/CGAL-5.6")
 set(CMAKE_MODULE_PATH   "${CGAL_DIR}/cmake/modules")
+
+set(ENABLE_MPI OFF)
 
 IF (RELEASE AND DEBUG)
   MESSAGE(FATAL_ERROR   "You can only make a release OR and debug build.")
@@ -67,3 +69,4 @@ add_subdirectory(${3RD_PARTY_DIR}/CavalierContours)
 
 add_subdirectory(${SOURCE_DIR}/Delaunay)
 add_subdirectory(${SOURCE_DIR}/Skeletonization)
+add_subdirectory(${SOURCE_DIR}/Segmentation)

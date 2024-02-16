@@ -14,7 +14,6 @@
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
           "CMAKE_BUILD_TYPE": "Release",
-          "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vendor/vcpkg/scripts/buildsystems/vcpkg.cmake",
           "CMAKE_CXX_COMPILER": "/usr/bin/g++",
           "CMAKE_MAKE_PROGRAM": "/usr/bin/make"
         }
@@ -26,7 +25,7 @@
         "generator": "Visual Studio 16 2019",
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
-          "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vendor/vcpkg/scripts/buildsystems/vcpkg.cmake"
+       
         }
       }
     ]

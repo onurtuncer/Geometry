@@ -13,7 +13,7 @@ typedef Skeleton::edge_descriptor                             Skeleton_edge;
 
 int main(int argc, char* argv[])
 {
-  std::ifstream input((argc>1)?argv[1]:CGAL::data_file_path("meshes/elephant.off"));
+  std::ifstream input((argc>1)?argv[1]:CGAL::data_file_path("elephant.off"));
   Triangle_mesh tmesh;
   input >> tmesh;
   if (!CGAL::is_triangle_mesh(tmesh))
@@ -55,4 +55,3 @@ int main(int argc, char* argv[])
       output << "2 " << skeleton[v].point << "  " << get(CGAL::vertex_point, tmesh, vd)  << "\n";
   return EXIT_SUCCESS;
 }
-
