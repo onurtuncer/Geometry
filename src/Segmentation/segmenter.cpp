@@ -5,6 +5,17 @@
 #include <CGAL/mesh_segmentation.h>
 #include <fstream>
 
+// #include <vtkSmartPointer.h>
+// #include <vtkPolyData.h>
+// #include <vtkPoints.h>
+// #include <vtkCellArray.h>
+// #include <vtkTriangle.h>
+// #include <vtkPolyDataMapper.h>
+// #include <vtkActor.h>
+// #include <vtkRenderer.h>
+// #include <vtkRenderWindow.h>
+// #include <vtkRenderWindowInteractor.h>
+
 #include <vtkSmartPointer.h>
 #include <vtkPolyData.h>
 #include <vtkPoints.h>
@@ -15,6 +26,9 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
+#include <vtkNamedColors.h>
+#include <vtkInteractorStyleTrackballCamera.h>
+#include <vtkProperty.h>
 
 typedef CGAL::Simple_cartesian<double>                               Kernel;
 typedef Kernel::Point_3                                              Point;
@@ -79,6 +93,85 @@ void visualizeMesh(const Polyhedron& polyhedron) {
     renderWindow->Render();
     renderWindowInteractor->Start();
 }
+
+void visualizeSegments(const std::vector<Polyhedron>& segments) {
+    // Create a renderer
+    vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+
+    // Create a named colors object
+    vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
+
+    // Add each segment as a separate actor with a different color
+    for (std::size_t i = 0; i < segments.size(); ++i) {
+        // Convert segment to VTK format
+        vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+        vtkSmartPointer<vtkCellArray> triangles = vtkSmartPointer<vtkCellArray>::New();
+
+        // Add vertices
+        for (auto vertexIterator = segments[i].vertices_begin(); vertexIterator != segments[i].vertices_end(); ++vertexIterator) {
+            auto point = vertexIterator->point();
+            points->InsertNextPoint(point.x(), point.y(), point.z());
+        }
+
+        // Add faces
+        for (auto facetIterator = segments[i].facets_begin(); facetIterator != segments[i].facets_end(); ++facetIterator) {
+            auto halfedgeHandle = facetIterator->halfedge();
+            vtkSmartPointer<vtkTriangle> triangle = vtkSmartPointer<vtkTriangle>::New();
+            for (int j = 0; j < 3; ++j) {
+                auto vertexHandle = halfedgeHandle->vertex();
+                triangle->GetPointIds()->SetId(j, vertexHandle->id());
+                halfedgeHandle = halfedgeHandle->next();
+            }
+            triangles->InsertNextCell(triangle);
+        }
+
+        vtkSmartPointer<vtkPolyData> polyData = vtkSmartPointer<vtkPolyData>::New();
+        polyData->SetPoints(points);
+        polyData->SetPolys(triangles);
+
+        vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+        mapper->SetInputData(polyData);
+
+        vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+        actor->SetMapper(mapper);
+        actor->GetProperty()->SetColor(colors->GetColor3d("SegmentColor" + std::to_string(i)).GetData());
+
+        renderer->AddActor(actor);
+    }
+
+    // Create a render window
+    vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
+    renderWindow->AddRenderer(renderer);
+
+    // Create an interactor
+    vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+    renderWindowInteractor->SetRenderWindow(renderWindow);
+
+    // Set the interactor style to trackball camera (enables zooming with mouse wheel)
+    vtkSmartPointer<vtkInteractorStyleTrackballCamera> style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+    renderWindowInteractor->SetInteractorStyle(style);
+
+    // Start the visualization
+    renderWindow->Render();
+    renderWindowInteractor->Start();
+}
+
+/* void writeOFF(const std::string& filename, const Polyhedron& mesh) {
+    std::ofstream ofs(filename);
+    ofs << "OFF" << std::endl;
+    ofs << mesh.size_of_vertices() << " " << mesh.size_of_facets() << " 0" << std::endl;
+    for (const auto& v : mesh.vertices()) {
+        ofs << v->point() << std::endl;
+    }
+    for (const auto& f : mesh.facets()) {
+        ofs << "3 ";
+        for (auto h = f->facet_begin(); h != f->facet_end(); ++h) {
+            ofs << h->vertex()->id() << " ";
+        }
+        ofs << std::endl;
+    }
+    ofs.close();
+} */
 
 // Property map associating a facet with an integer as id to an
 // element in a vector stored internally
@@ -145,8 +238,14 @@ int main(int argc, char* argv[])
   std::cout << "Number of segments: "
             << CGAL::segmentation_from_sdf_values(tmesh, sdf_property_map, segment_property_map) <<"\n";
 
-  // Visualize the segmented mesh
-  visualizeMesh(tmesh);
+//   // Visualize the segmented mesh
+//   visualizeMesh(tmesh);
+
+     // Assuming 'segments' is a vector of segmented Polyhedron objects
+    std::vector<Polyhedron> segments;
+
+    // Visualize the segmented mesh with each segment in a different color
+    visualizeSegments(segments);
 
   return EXIT_SUCCESS;
 }
