@@ -1,3 +1,20 @@
+
+#include "MyVtkItem.h"
+
+#include <vtkActor.h>
+#include <vtkInteractorStyleTrackballCamera.h>
+#include <vtkMinimalStandardRandomSequence.h>
+#include <vtkNamedColors.h>
+#include <vtkNew.h>
+#include <vtkObjectFactory.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkPropPicker.h>
+#include <vtkProperty.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
+#include <vtkSphereSource.h>
+
 #include <vtkSmartPointer.h>
 #include <vtkPoints.h>
 #include <vtkCellArray.h>
@@ -19,8 +36,8 @@
 
 #include <vtkPointData.h> // Include for vtkPointData
 #include <vtkFloatArray.h> // Include for vtkFloatArray
-
 #include <vtkPolyDataNormals.h>
+
 
 vtkSmartPointer<vtkActor> createLineSegment(double startPoint[3], double endPoint[3]) {
     vtkSmartPointer<vtkLineSource> lineSource = vtkSmartPointer<vtkLineSource>::New();
@@ -36,121 +53,6 @@ vtkSmartPointer<vtkActor> createLineSegment(double startPoint[3], double endPoin
     
     return actor;
 }
-
-/* vtkSmartPointer<vtkActor> createCircle(double center[3], double radius) {
-    vtkSmartPointer<vtkRegularPolygonSource> circleSource = vtkSmartPointer<vtkRegularPolygonSource>::New();
-    circleSource->SetNumberOfSides(50); // Adjust the number of sides for smoothness
-    circleSource->SetRadius(radius);
-    circleSource->SetCenter(center);
-    
-    vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-    mapper->SetInputConnection(circleSource->GetOutputPort());
-    
-    vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
-    actor->SetMapper(mapper);
-    actor->GetProperty()->SetRepresentationToWireframe(); // Render only the wireframe
-    actor->GetProperty()->SetColor(0, 0, 0); // Set outline color (black)
-    
-    return actor;
-}
- */
-
-// vtkSmartPointer<vtkActor> createCircle(double center[3], double radius, double normal[3]) {
-//     // Create circle geometry
-//     vtkSmartPointer<vtkRegularPolygonSource> circleSource = vtkSmartPointer<vtkRegularPolygonSource>::New();
-//     circleSource->SetNumberOfSides(50); // Adjust the number of sides for smoothness
-//     circleSource->SetRadius(radius);
-//     circleSource->SetCenter(center);
-//     circleSource->Update(); // Ensure source is up-to-date
-    
-//     // Get the output polydata
-//     vtkPolyData* polyData = circleSource->GetOutput();
-    
-//     // Create normals array
-//     vtkSmartPointer<vtkFloatArray> normals = vtkSmartPointer<vtkFloatArray>::New();
-//     normals->SetNumberOfComponents(3); // 3 components (x, y, z) per normal
-//     normals->SetNumberOfTuples(polyData->GetNumberOfPoints());
-    
-//     // Set the same normal for all points
-//     for (vtkIdType i = 0; i < polyData->GetNumberOfPoints(); ++i) {
-//         normals->SetTuple(i, normal); // Set the specified normal for each point
-//     }
-    
-//     // Add normals to polydata
-//     polyData->GetPointData()->SetNormals(normals);
-    
-//     // Create mapper and actor
-//     vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-//     mapper->SetInputData(polyData); // Use the updated polydata
-    
-//     vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
-//     actor->SetMapper(mapper);
-    
-//     // Set actor properties
-//     actor->GetProperty()->SetRepresentationToWireframe(); // Render only the wireframe
-//     actor->GetProperty()->SetColor(0, 0, 0); // Set outline color (black)
-    
-//     return actor;
-// }
-
-/* vtkSmartPointer<vtkActor> createArc(double center[3], double radius, double startAngle, double endAngle) {
-    vtkSmartPointer<vtkArcSource> arcSource = vtkSmartPointer<vtkArcSource>::New();
-    arcSource->SetCenter(center);
-    arcSource->SetResolution(100); // Adjust resolution as needed
-    
-    // Convert angles from degrees to radians
-    startAngle = startAngle * vtkMath::Pi() / 180.0;
-    endAngle = endAngle * vtkMath::Pi() / 180.0;
-    
-    // Set polar vectors for start and end angles
-    arcSource->SetPolarVector(std::cos(startAngle), std::sin(startAngle), 0); // Set start angle
-    arcSource->SetPolarVector(std::cos(endAngle), std::sin(endAngle), 0); // Set end angle
-    
-    vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-    mapper->SetInputConnection(arcSource->GetOutputPort());
-    
-    vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
-    actor->SetMapper(mapper);
-    actor->GetProperty()->SetColor(0, 0, 0); // Set color to black
-    
-    return actor;
-} */
-
-// vtkSmartPointer<vtkActor> createArc(double center[3], double radius, double startAngle, double endAngle, double normal[3]) {
-//     vtkSmartPointer<vtkArcSource> arcSource = vtkSmartPointer<vtkArcSource>::New();
-//     arcSource->SetCenter(center);
-//     arcSource->SetResolution(100); // Adjust resolution as needed
-    
-//     // Convert angles from degrees to radians
-//     startAngle = startAngle * vtkMath::Pi() / 180.0;
-//     endAngle = endAngle * vtkMath::Pi() / 180.0;
-    
-//     // Set polar vectors for start and end angles
-//     arcSource->SetPolarVector(std::cos(startAngle), std::sin(startAngle), 0); // Set start angle
-//     arcSource->SetPolarVector(std::cos(endAngle), std::sin(endAngle), 0); // Set end angle
-    
-//     vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-//     mapper->SetInputConnection(arcSource->GetOutputPort());
-    
-//     vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
-//     actor->SetMapper(mapper);
-//     actor->GetProperty()->SetColor(0, 0, 0); // Set color to black
-    
-//     // Compute normals for the arc
-//     vtkSmartPointer<vtkPolyDataNormals> normalsFilter = vtkSmartPointer<vtkPolyDataNormals>::New();
-//     normalsFilter->SetInputConnection(arcSource->GetOutputPort());
-//     normalsFilter->ComputePointNormalsOn();
-//     normalsFilter->ComputeCellNormalsOff();
-//     normalsFilter->Update();
-    
-//     // Set the normals to the actor
-//     vtkSmartPointer<vtkPolyData> polyData = normalsFilter->GetOutput();
-//     vtkSmartPointer<vtkFloatArray> normals = vtkSmartPointer<vtkFloatArray>::New();
-//     normals = vtkFloatArray::SafeDownCast(polyData->GetPointData()->GetNormals());
-//     actor->GetMapper()->GetInput()->GetPointData()->SetNormals(normals);
-    
-//     return actor;
-// }
 
 vtkSmartPointer<vtkActor> createCircle(double center[3], double radius, double normal[3]) {
     // Normalize the normal vector
@@ -272,42 +174,96 @@ void renderCylinderWithPoseAndColor(vtkSmartPointer<vtkRenderer> renderer, doubl
     renderer->AddActor(actor);
 }
 
-/* int main(int argc, char* argv[]) {
-    // Example geometric primitives
-    double startPoint[3] = {0, 0, 0};
-    double endPoint[3] = {1, 1, 1};
-    double center[3] = {0, 0, 0};
-    double radius = 1.0;
-    double startAngle = 0.0;
-    double endAngle = 90.0;
-    
-    // Create line segment
-    vtkSmartPointer<vtkActor> lineSegment = createLineSegment(startPoint, endPoint);
-    
-    // Create circle
-    vtkSmartPointer<vtkActor> circle = createCircle(center, radius);
-    
-    // Create arc
-    vtkSmartPointer<vtkActor> arc = createArc(center, radius, startAngle, endAngle);
+namespace {
+// Handle mouse events
+class MouseInteractorHighLightActor : public vtkInteractorStyleTrackballCamera
+{
+public:
+    static MouseInteractorHighLightActor* New();
+    vtkTypeMacro(MouseInteractorHighLightActor,
+                 vtkInteractorStyleTrackballCamera);
 
-    // Display geometric primitives
-    std::vector<vtkSmartPointer<vtkActor>> primitives;
-    primitives.push_back(lineSegment);
-    primitives.push_back(circle);
-    primitives.push_back(arc);
-    
-    vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
-    
-    displayGeometricPrimitives(primitives);
-    
-    double tipOrientation[3] = {1.0, 0.0, 0.0}; // Example: pointing in the X direction
-    renderCylinderWithPoseAndColor(renderer, 2.0, 4.0, 0.0, 0.0, 0.0, tipOrientation, 1.0, 0.0, 0.0);  // Red cylinder at origin
-    
-    return 0;
-} */
+    MouseInteractorHighLightActor()
+    {
+        LastPickedActor = NULL;
+        LastPickedProperty = vtkProperty::New();
+    }
+    virtual ~MouseInteractorHighLightActor()
+    {
+        LastPickedProperty->Delete();
+    }
+    virtual void OnLeftButtonDown() override
+    {
+        vtkNew<vtkNamedColors> colors;
 
-int main(int argc, char* argv[]) {
-    // Example geometric primitives
+        int* clickPos = this->GetInteractor()->GetEventPosition();
+
+        // Pick from this location.
+        vtkNew<vtkPropPicker> picker;
+        picker->Pick(clickPos[0], clickPos[1], 0, this->GetDefaultRenderer());
+
+        // If we picked something before, reset its property
+        if (this->LastPickedActor)
+        {
+            this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
+        }
+        this->LastPickedActor = picker->GetActor();
+        if (this->LastPickedActor)
+        {
+            // Save the property of the picked actor so that we can
+            // restore it next time
+            this->LastPickedProperty->DeepCopy(this->LastPickedActor->GetProperty());
+            // Highlight the picked actor by changing its properties
+            this->LastPickedActor->GetProperty()->SetColor(
+                colors->GetColor3d("Red").GetData());
+            this->LastPickedActor->GetProperty()->SetDiffuse(1.0);
+            this->LastPickedActor->GetProperty()->SetSpecular(0.0);
+            this->LastPickedActor->GetProperty()->EdgeVisibilityOn();
+        }
+
+        // Forward events
+        vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
+    }
+
+private:
+    vtkActor* LastPickedActor;
+    vtkProperty* LastPickedProperty;
+};
+
+vtkStandardNewMacro(MouseInteractorHighLightActor);
+} // namespace
+
+namespace {
+struct MyVtkData : vtkObject
+{
+    static MyVtkData* New();
+    vtkTypeMacro(MyVtkData, vtkObject);
+
+    // Place all your persistant VTK objects here
+};
+
+vtkStandardNewMacro(MyVtkData);
+}
+
+QQuickVtkItem::vtkUserData MyVtkItem::initializeVTK(vtkRenderWindow *renderWindow)
+{
+    auto vtk = vtkNew<MyVtkData>();
+
+    vtkNew<vtkNamedColors> colors;
+
+    // A renderer and render window
+    vtkNew<vtkRenderer> renderer;
+//remove    vtkNew<vtkRenderWindow> renderWindow;
+    renderWindow->SetSize(640, 480);
+    renderWindow->AddRenderer(renderer);
+    renderWindow->SetWindowName("HighlightPickedActor");
+
+    // Set the custom type to use for interaction.
+    vtkNew<MouseInteractorHighLightActor> style;
+    style->SetDefaultRenderer(renderer);
+
+    renderWindow->GetInteractor()->SetInteractorStyle(style);
+
     double startPoint[3] = {0, 0, 0};
     double endPoint[3] = {1, 1, 1};
     double center[3] = {0, 0, 0};
@@ -326,8 +282,8 @@ int main(int argc, char* argv[]) {
     double normal2[3] = {0.0, 1.0, 0.0}; // Example normal vector pointing in the y-direction
     vtkSmartPointer<vtkActor> arc = createArc(center, radius, startAngle, endAngle, normal2);
 
-    // Create renderer and add geometric primitives
-    vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+    // // Create renderer and add geometric primitives
+    // vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
     renderer->AddActor(lineSegment);
     renderer->AddActor(circle);
     renderer->AddActor(arc);
@@ -336,17 +292,6 @@ int main(int argc, char* argv[]) {
     double tipOrientation[3] = {0.707, 0.707, 0.0}; // Example: pointing in the X direction
     renderCylinderWithPoseAndColor(renderer, 0.2, 3.0, 1.0, 1.0, 1.0, tipOrientation, 1.0, 0.0, 0.0);  // Red cylinder at origin
 
-    // Create render window and interactor
-    vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
-    renderWindow->AddRenderer(renderer);
-
-    vtkSmartPointer<vtkRenderWindowInteractor> interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
-    interactor->SetRenderWindow(renderWindow);
-
-    // Set background color and start rendering
-    renderer->SetBackground(1.0, 1.0, 1.0);  // Set background color to white
-    renderWindow->Render();
-    interactor->Start();
-    
-    return 0;
+    renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
+    return vtk;
 }
