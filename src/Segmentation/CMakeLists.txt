@@ -9,7 +9,7 @@ find_package(Eigen3 3.1.0 QUIET)
 include(CGAL_Eigen3_support)
 
 find_package(VTK REQUIRED)
-include(${VTK_USE_FILE})
+# include(${VTK_USE_FILE})
 
 # Activate this property to "hide" targets (i.e. cgal) to the end user
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
