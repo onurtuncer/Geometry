@@ -46,13 +46,13 @@ int main(int argc, char* argv[]) {
 
      // Create cylinder
     double tipOrientation[3] = {0.707, 0.707, 0.0}; // Example: pointing in the X direction
-    toolPathRenderer.AddToolTip(0.2, 3.0, 1.0, 1.0, 1.0, tipOrientation);  // Red cylinder at origin
-
+    double tipPosition[3] = {1.0, 1.0, 1.0}; 
+    toolPathRenderer.AddToolTip(0.2, 3.0, tipPosition, tipOrientation);  // Red cylinder at origin
     toolPathRenderer.Render();
-
     std::this_thread::sleep_for(std::chrono::seconds(2)); // Wait for 2 seconds
+    double tipPositionNew[3] = {2.0, 0.0, 2.0}; 
+    toolPathRenderer.UpdateToolTip(tipPositionNew, tipOrientation);  // Red cylinder at origin
 
     toolPathRenderer.StartInteractor();
-
     return 0;
 }
