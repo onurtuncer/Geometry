@@ -9,7 +9,10 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Project name
 project(trajectory)
 
-set(src_files trajectory_viewer.cpp)
+set(src_files 
+                  #trajectory_viewer.cpp
+                ToolPathRenderer.cpp
+                main.cpp )
 
 add_executable(${PROJECT_NAME} ${src_files})
 
