@@ -126,10 +126,10 @@ void ToolPathRenderer::AddToolTip() {
       
   if (!m_ToolActor) {
     // Create a cylinder
-    vtkSmartPointer<vtkCylinderSource> cylinder = vtkSmartPointer<vtkCylinderSource>::New();
+    auto cylinder = vtkSmartPointer<vtkCylinderSource>::New();
     cylinder->SetRadius(m_ToolDiameter / 2.0);
     cylinder->SetHeight(m_ToolHeight);
-    cylinder->SetResolution(50); // Set a higher resolution for smoother appearance
+    cylinder->SetResolution(50); 
     // Create mapper
     vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
     mapper->SetInputConnection(cylinder->GetOutputPort());
@@ -137,43 +137,42 @@ void ToolPathRenderer::AddToolTip() {
     m_ToolActor = vtkSmartPointer<vtkActor>::New();
     m_ToolActor->SetMapper(mapper);
     // Set the color of the actor to red
-    m_ToolActor->GetProperty()->SetColor(1.0, 0.0, 0.0); // Red
-    // m_ToolActor->GetProperty()->SetColor(m_ToolColor[0], m_ToolColor[1], m_ToolColor[2]); 
+     m_ToolActor->GetProperty()->SetColor(m_ToolColor[0], m_ToolColor[1], m_ToolColor[2]); 
     m_Renderer->AddActor(m_ToolActor); // Add the actor to the renderer
   }
-    // Update tooltip position and orientation
-    vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
-    transform->Translate(m_ToolPosition);
-    // Calculate the rotation angles from the tip orientation vector
-    double angleX = atan2(m_ToolOrientation[1], m_ToolOrientation[2]) * 180.0 / vtkMath::Pi();
-    double angleY = atan2(-m_ToolOrientation[0], sqrt(m_ToolOrientation[1] * m_ToolOrientation[1] + m_ToolOrientation[2] * m_ToolOrientation[2])) * 180.0 / vtkMath::Pi();
-    transform->RotateWXYZ(angleX, 1.0, 0.0, 0.0);
-    transform->RotateWXYZ(angleY, 0.0, 1.0, 0.0);
-    m_ToolActor->SetUserTransform(transform);
+
+    UpdateToolPose();
 }
 
 void ToolPathRenderer::UpdateToolTip() {
 
-  if (m_ToolActor) {
-        vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
-        transform->Translate(m_ToolPosition);
+   if (m_ToolActor) {
 
+      UpdateToolPose();
+      UpdateCamera();
+   } 
+}
 
-        // Calculate the rotation angles to align the tool orientation with the Z-axis
-        double angleX = atan2(m_ToolOrientation[1], m_ToolOrientation[2]) * 180.0 / vtkMath::Pi();
-        double angleY = atan2(-1.0* m_ToolOrientation[0], sqrt(m_ToolOrientation[1] * m_ToolOrientation[1] + m_ToolOrientation[2] * m_ToolOrientation[2])) * 180.0 / vtkMath::Pi();
+void ToolPathRenderer::UpdateToolPose(){
 
-        // Apply the rotations
-        transform->RotateWXYZ(angleX, 1.0, 0.0, 0.0);
-        transform->RotateWXYZ(angleY, 0.0, 1.0, 0.0);
+    vtkMath::Normalize(m_ToolOrientation);
+    // Define unit vector along y-axis
+    double yAxis[3] = {0.0, 1.0, 0.0};
 
-        // Set the user transform to the tool actor
-        m_ToolActor->SetUserTransform(transform);
+    // Calculate the rotation angle and axis to align the cylinder along the arbitrary vector
+    double rotationAxis[3];
+    vtkMath::Cross(m_ToolOrientation, yAxis, rotationAxis);
+    double rotationAngle = vtkMath::DegreesFromRadians(acos(vtkMath::Dot(m_ToolOrientation, yAxis)));
 
-        // Update camera (optional, depending on your requirements)
-        UpdateCamera();
-    }
-    
+    auto transform = vtkSmartPointer<vtkTransform>::New();
+    transform->Translate(m_ToolPosition[0] + 0.5 * m_ToolHeight * m_ToolOrientation[0],
+                         m_ToolPosition[1] + 0.5 * m_ToolHeight * m_ToolOrientation[1],
+                         m_ToolPosition[2] + 0.5 * m_ToolHeight * m_ToolOrientation[2]);  
+
+    transform->RotateWXYZ(rotationAngle, rotationAxis);
+
+    // Apply the transformation to the actor
+    m_ToolActor->SetUserTransform(transform);
 }
 
 void ToolPathRenderer::AddPolyline(vtkSmartPointer<vtkPoints> points) {

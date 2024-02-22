@@ -7,6 +7,9 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkPoints.h>
+
+#include <vtkMatrix4x4.h>
+#include <vtkLinearTransform.h>
   
 class ToolPathRenderer {
 
@@ -67,6 +70,10 @@ class ToolPathRenderer {
     void AddCamera();
     void AddToolTip();
     void UpdateCamera();
+
+    void UpdateToolPose();
+
+
 
   private:
     vtkSmartPointer<vtkRenderer> m_Renderer;
