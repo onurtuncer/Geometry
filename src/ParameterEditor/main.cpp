@@ -13,7 +13,6 @@
 #include "ParameterManager.h"
 #include "QWrappedParameter.h"
 
-
 void loadValue(const QJsonValue& value, TreeItem* parent, TreeModel* model)
 {
     if (value.isObject()) {
@@ -53,47 +52,10 @@ void loadValue(const QJsonValue& value, TreeItem* parent, TreeModel* model)
     }
 }
 
-// void loadParameter(Controller::WrappedParameter wrapped,  TreeItem* parent, TreeModel* model)
-// {
-//     ParameterEntry entry(QString("root"), wrapped);
-//     auto child = new TreeItem(QVariant::fromValue(entry));
-//     model->addItem(parent, child);  
-// }
 
-// void loadParameter(const QString& paramName, const QVariant& paramValue, TreeModel* model) {
-//     QStringList hierarchy = paramName.split(".");
-//     TreeItem* parent = model->getRoot(); // Assuming root is the parent initially
-
-//     // Iterate through the hierarchy, adding nodes as necessary
-//     for (const QString& nodeName : hierarchy) {
-//         // Check if the node already exists
-//         bool nodeExists = false;
-//         for (int i = 0; i < parent->childCount(); ++i) {
-//             if (parent->getChild(i)->data().toString() == nodeName) {
-//                 parent = parent->getChild(i);
-//                 nodeExists = true;
-//                 break;
-//             }
-//         }
-
-//         // If node doesn't exist, create and add it
-//         if (!nodeExists) {
-//             ParameterEntry entry(nodeName, QVariant()); // Here you might want to pass the appropriate QVariant for the value
-//             TreeItem* child = new TreeItem(QVariant::fromValue(entry));
-//             model->addItem(parent, child);
-//             parent = child;
-//         }
-//     }
-
-//     // Add the final parameter node
-//     ParameterEntry entry(hierarchy.last(), paramValue);
-//     TreeItem* parameterNode = new TreeItem(QVariant::fromValue(entry));
-//     model->addItem(parent, parameterNode);
-// }
-
-void loadParameter(const QString& paramPath, const QVariant& paramValue, TreeModel* model) {
-
-    QStringList hierarchy = paramPath.split(".");
+void loadParameter(const QString& paramName, const QVariant& paramValue, TreeModel* model) {
+    
+    QStringList hierarchy = paramName.split(".");
     TreeItem* parent = model->rootItem(); // Assuming root is the parent initially
 
     // Iterate through the hierarchy, adding nodes as necessary
@@ -101,7 +63,7 @@ void loadParameter(const QString& paramPath, const QVariant& paramValue, TreeMod
         // Check if the node already exists
         bool nodeExists = false;
         for (int i = 0; i < parent->childCount(); ++i) {
-            if (parent->getChild(i)->data().toString() == nodeName) {
+            if (parent->getChild(i)->data().value<ParameterEntry>().key() == nodeName) {
                 parent = parent->getChild(i);
                 nodeExists = true;
                 break;
@@ -110,7 +72,7 @@ void loadParameter(const QString& paramPath, const QVariant& paramValue, TreeMod
 
         // If node doesn't exist, create and add it
         if (!nodeExists) {
-            ParameterEntry entry(nodeName, QVariant()); // Placeholder QVariant
+            ParameterEntry entry(nodeName, QVariant()); // Here you might want to pass the appropriate QVariant for the value
             TreeItem* child = new TreeItem(QVariant::fromValue(entry));
             model->addItem(parent, child);
             parent = child;
@@ -122,6 +84,10 @@ void loadParameter(const QString& paramPath, const QVariant& paramValue, TreeMod
     TreeItem* parameterNode = new TreeItem(QVariant::fromValue(entry));
     model->addItem(parent, parameterNode);
 }
+
+
+
+
 
 
 void populateModel(TreeModel& model)
@@ -139,13 +105,6 @@ void populateModel(TreeModel& model)
     auto root = doc.isArray() ? QJsonValue(doc.array()) : QJsonValue(doc.object());
     loadValue(root, model.rootItem(), &model);
 }
-
-/* void populateParameterModel(TreeModel& model)
-{
-    auto root = QWrappedParameter(Controller::WrappedParameter(Controller::Parameter<int>(0)));
-
-    loadValue(root, model.rootItem(), &model);
-} */
 
 int main(int argc, char* argv[]){
 
@@ -190,12 +149,6 @@ qDebug() << "New Value of subuk2:" << variant3;
 QGuiApplication app(argc, argv);
 QQmlApplicationEngine engine;
 
-TreeModel* model = new TreeModel(&engine); // Assuming you have a parent object for your tree model
-
-loadParameter(QString("machine.number_of_channels"), QWrappedParameter(Parameter<uint8_t>(1)).toQVariant(), model);
-loadParameter(QString("channels.01.type"), QWrappedParameter(Parameter<int>(0)).toQVariant(), model);
-// Add other parameters similarly...
-
 
 // auto parameterModel = new TreeModel(&engine);
 // populateModel(*jsonModel);
@@ -211,7 +164,19 @@ loadParameter(QString("channels.01.type"), QWrappedParameter(Parameter<int>(0)).
     auto jsonModel = new TreeModel(&engine);
     populateModel(*jsonModel);
 
+    auto parameterModel = new TreeModel(&engine); // Assuming you have a parent object for your tree model
+
+loadParameter(QString("machine.number_of_channels"), QWrappedParameter(Parameter<uint8_t>(1)).toQVariant(), parameterModel);
+loadParameter(QString("channels.01.type"), QWrappedParameter(Parameter<int>(100)).toQVariant(), parameterModel);
+loadParameter(QString("channels.01.number_of_axes"), QWrappedParameter(Parameter<int>(3)).toQVariant(), parameterModel);
+
+// "channels.01.servo_names", Parameter<std::vector<std::string>>({"01","02","03"}));
+
+
     engine.rootContext()->setContextProperty("jsonModel", jsonModel);
+
+    engine.rootContext()->setContextProperty("parameterModel", parameterModel);
+
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(
         &engine,

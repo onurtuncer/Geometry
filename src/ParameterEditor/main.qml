@@ -11,15 +11,43 @@ Window {
    visible: true
    width: 400
    height: 400
-   title: qsTr("Json TreeView")
+   title: qsTr("Parameter TreeView")
 
-   TreeView {
-      id: jsonView
+   // TreeView {
+   //    id: jsonView
+
+   //    anchors.fill: parent
+   //    anchors.margins: 1
+
+   //    model: jsonModel
+   //    rowPadding: 20
+   //    selectionEnabled: true
+
+   //    contentItem: RowLayout {
+   //       Text {
+   //          verticalAlignment: Text.AlignVCenter
+   //          horizontalAlignment: Text.AlignLeft
+   //          text: currentRow.currentData.key
+   //       }
+
+   //       Text {
+   //          Layout.fillWidth: true
+   //          Layout.rightMargin: 10
+
+   //          verticalAlignment: Text.AlignVCenter
+   //          horizontalAlignment: Text.AlignRight
+   //          text: currentRow.currentData.value ? currentRow.currentData.value : ""
+   //       }
+   //    }
+   // }
+
+    TreeView {
+      id: parameterView
 
       anchors.fill: parent
       anchors.margins: 1
 
-      model: jsonModel
+      model: parameterModel
       rowPadding: 20
       selectionEnabled: true
 
@@ -40,4 +68,6 @@ Window {
          }
       }
    }
+
+
 }

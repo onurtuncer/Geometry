@@ -40,3 +40,22 @@ void ParameterEntry::keyChanged(const QString& newKey) {
     // Emit the keyChanged signal
     emit keyChanged(newKey);
 }
+
+QString ParameterEntry::PrettyKey() const{
+
+    QString originalString = m_key;
+    QStringList parts = originalString.split('_');
+    QString result;
+    for (int i = 0; i < parts.size(); ++i) {
+        QString part = parts.at(i);
+        if (i == 0 || part.toLower() != "of") {
+            // Capitalize first letter
+            part[0] = part[0].toUpper();
+        }
+        result += part + " ";
+    }
+    // Remove trailing space
+    result = result.trimmed();
+    return result;
+}
+

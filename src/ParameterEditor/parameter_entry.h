@@ -9,7 +9,7 @@
 
 class ParameterEntry {
     Q_GADGET
-    Q_PROPERTY(QString key READ key WRITE setKey)
+    Q_PROPERTY(QString key READ PrettyKey WRITE setKey)
     Q_PROPERTY(QVariant value READ value WRITE setValue NOTIFY valueChanged)
 
 public:
@@ -17,6 +17,7 @@ public:
     ParameterEntry(const QString& key, const QVariant& value, QObject* parent = nullptr);
 
     QString key() const;
+    QString PrettyKey() const;
     void setKey(const QString& key);
 
     QVariant value() const;
