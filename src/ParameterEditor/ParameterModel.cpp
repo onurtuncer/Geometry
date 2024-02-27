@@ -4,6 +4,8 @@
 
 #include "Parameter.h"
 
+//TODO delete this file!!!
+
 class ParameterModel : public QAbstractItemModel {
     Q_OBJECT
 public:

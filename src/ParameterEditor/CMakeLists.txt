@@ -11,11 +11,10 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml Quick)
+find_package(Qt6 REQUIRED COMPONENTS Core Qml Quick)
 
 set(PROJECT_SOURCES
     main.cpp
-    # ParameterModel.cpp
     tree_model.cpp
     tree_item.cpp
     json_entry.cpp
@@ -25,14 +24,14 @@ set(PROJECT_SOURCES
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
    
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core 
-                                              Qt5::Quick 
-                                              Qt5::Qml 
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core 
+                                              Qt6::Quick 
+                                              Qt6::Qml 
                                               )
 
 # Include Qt headers for the specific target
 target_include_directories(${PROJECT_NAME} PRIVATE
-    ${Qt5Core_INCLUDE_DIRS}
-    ${Qt5Quick_INCLUDE_DIRS}
-    ${Qt5Qml_INCLUDE_DIRS}
+    ${Qt6Core_INCLUDE_DIRS}
+    ${Qt6Quick_INCLUDE_DIRS}
+    ${Qt6Qml_INCLUDE_DIRS}
     )

@@ -1,52 +1,42 @@
 #include "parameter_entry.h"
 
-/* ParameterEntry::ParameterEntry()
-    : _type(Controller::ParameterType::Unknown
-{}
- */
-ParameterEntry::ParameterEntry(const QString& key, QWrappedParameter wrapped)
-    : m_Key(key)
-    , m_Wrapped(QWrappedParameter(wrapped))
-{}
+ParameterEntry::ParameterEntry(){}
 
-QString ParameterEntry::GetKey() const {
+ParameterEntry::ParameterEntry(const QString& key, const QVariant& value, QObject* parent)
+   : m_key(key), m_value(value) {}
 
-    return m_Key;
+QString ParameterEntry::key() const {
+
+    return m_key;
 }
 
-QVariant ParameterEntry::GetValue() const {
+void ParameterEntry::setKey(const QString& key) {
 
-   return m_Wrapped.toQVariant();
+    if (m_key == key) return; 
+
+    m_key = key;
+    emit keyChanged(m_key);
 }
 
-Controller::ParameterType ParameterEntry::GetType() const {
+QVariant ParameterEntry::value() const {
 
-    return m_Wrapped.GetType();
+    return m_value;
 }
 
-void ParameterEntry::SetKey(QString key){
+void ParameterEntry::setValue(const QVariant& value) {
+    
+    if (m_value == value) return; 
 
-    if (m_Key == key) return;
-    m_Key = key;
+    m_value = value;
+    emit valueChanged(m_value);
 }
 
-void ParameterEntry::SetValue(QVariant value){
-
-    m_Wrapped.fromQVariant(value);
+void ParameterEntry::valueChanged(const QVariant& newValue) {
+    // Emit the valueChanged signal
+    emit valueChanged(newValue);
 }
 
-bool ParameterEntry::isObject() const{
-
-    return false;
-}
-
-bool ParameterEntry::isArray() const{
-
-    return (m_Wrapped.GetType() == Controller::ParameterType::StringVector) ||
-           (m_Wrapped.GetType() == Controller::ParameterType::DoubleVector) ;  // TODO need to add some more!
-}
-
-bool ParameterEntry::isValue() const{
-
-    return !(isObject() || isArray());
+void ParameterEntry::keyChanged(const QString& newKey) {
+    // Emit the keyChanged signal
+    emit keyChanged(newKey);
 }

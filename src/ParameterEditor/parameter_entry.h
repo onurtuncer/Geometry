@@ -1,38 +1,36 @@
-#ifndef PARAMETERENTRY_H
-#define PARAMETERENTRY_H
 
-#include <memory>
-#include "Parameter.h"
-#include "QWrappedParameter.h"
+#ifndef PARAMETER_ENTRY_H
+#define PARAMETER_ENTRY_H
+
+#include <QString>
+#include <QVariant>
+
+// #include "parameter_entry.moc"
 
 class ParameterEntry {
-
     Q_GADGET
-    Q_PROPERTY(QString key READ GetKey WRITE SetKey)
-    Q_PROPERTY(QVariant value READ GetValue WRITE SetValue)
-    //TODO add type 
+    Q_PROPERTY(QString key READ key WRITE setKey)
+    Q_PROPERTY(QVariant value READ value WRITE setValue NOTIFY valueChanged)
 
 public:
     ParameterEntry();
-    ParameterEntry(const QString& key, QWrappedParameter wrapped);
+    ParameterEntry(const QString& key, const QVariant& value, QObject* parent = nullptr);
 
-    QString GetKey() const;
-    void SetKey(QString key);
+    QString key() const;
+    void setKey(const QString& key);
 
-    QVariant GetValue() const;
-    void SetValue(QVariant value);
+    QVariant value() const;
+    void setValue(const QVariant& value);
 
-    Controller::ParameterType GetType() const;
-
-    Q_INVOKABLE bool isObject() const;
-    Q_INVOKABLE bool isArray() const;
-    Q_INVOKABLE bool isValue() const;
+signals:
+    void valueChanged(const QVariant& value);
+    void keyChanged(const QString& key);
 
 private:
-    QString                 m_Key;
-    QWrappedParameter       m_Wrapped;
+    QString m_key;
+    QVariant m_value;
 };
 
-Q_DECLARE_METATYPE(ParameterEntry)
+Q_DECLARE_METATYPE(ParameterEntry); // Add this line
 
-#endif // PARAMETERENTRY_H
+#endif // PARAMETER_ENTRY_H

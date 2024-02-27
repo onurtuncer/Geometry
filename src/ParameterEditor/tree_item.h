@@ -65,6 +65,12 @@ public:
     //! Return the depth of this node inside the tree.
     int depth() const;
 
+    TreeItem* getChild(int row) const{
+
+      if (row >= 0 && row < _childItems.size()) return _childItems[row];
+      return nullptr;
+    }
+
 private:
     TreeItem* parentItem();
     void setParentItem(TreeItem* parentItem);

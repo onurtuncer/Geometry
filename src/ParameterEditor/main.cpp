@@ -55,12 +55,73 @@ void loadValue(const QJsonValue& value, TreeItem* parent, TreeModel* model)
 
 // void loadParameter(Controller::WrappedParameter wrapped,  TreeItem* parent, TreeModel* model)
 // {
-//     ParameterEntry entry;
-//     entry.setValue(value.toVariant());
-//     entry.setType(value.type());
+//     ParameterEntry entry(QString("root"), wrapped);
 //     auto child = new TreeItem(QVariant::fromValue(entry));
 //     model->addItem(parent, child);  
 // }
+
+// void loadParameter(const QString& paramName, const QVariant& paramValue, TreeModel* model) {
+//     QStringList hierarchy = paramName.split(".");
+//     TreeItem* parent = model->getRoot(); // Assuming root is the parent initially
+
+//     // Iterate through the hierarchy, adding nodes as necessary
+//     for (const QString& nodeName : hierarchy) {
+//         // Check if the node already exists
+//         bool nodeExists = false;
+//         for (int i = 0; i < parent->childCount(); ++i) {
+//             if (parent->getChild(i)->data().toString() == nodeName) {
+//                 parent = parent->getChild(i);
+//                 nodeExists = true;
+//                 break;
+//             }
+//         }
+
+//         // If node doesn't exist, create and add it
+//         if (!nodeExists) {
+//             ParameterEntry entry(nodeName, QVariant()); // Here you might want to pass the appropriate QVariant for the value
+//             TreeItem* child = new TreeItem(QVariant::fromValue(entry));
+//             model->addItem(parent, child);
+//             parent = child;
+//         }
+//     }
+
+//     // Add the final parameter node
+//     ParameterEntry entry(hierarchy.last(), paramValue);
+//     TreeItem* parameterNode = new TreeItem(QVariant::fromValue(entry));
+//     model->addItem(parent, parameterNode);
+// }
+
+void loadParameter(const QString& paramPath, const QVariant& paramValue, TreeModel* model) {
+
+    QStringList hierarchy = paramPath.split(".");
+    TreeItem* parent = model->rootItem(); // Assuming root is the parent initially
+
+    // Iterate through the hierarchy, adding nodes as necessary
+    for (const QString& nodeName : hierarchy) {
+        // Check if the node already exists
+        bool nodeExists = false;
+        for (int i = 0; i < parent->childCount(); ++i) {
+            if (parent->getChild(i)->data().toString() == nodeName) {
+                parent = parent->getChild(i);
+                nodeExists = true;
+                break;
+            }
+        }
+
+        // If node doesn't exist, create and add it
+        if (!nodeExists) {
+            ParameterEntry entry(nodeName, QVariant()); // Placeholder QVariant
+            TreeItem* child = new TreeItem(QVariant::fromValue(entry));
+            model->addItem(parent, child);
+            parent = child;
+        }
+    }
+
+    // Add the final parameter node
+    ParameterEntry entry(hierarchy.last(), paramValue);
+    TreeItem* parameterNode = new TreeItem(QVariant::fromValue(entry));
+    model->addItem(parent, parameterNode);
+}
 
 
 void populateModel(TreeModel& model)
@@ -78,6 +139,13 @@ void populateModel(TreeModel& model)
     auto root = doc.isArray() ? QJsonValue(doc.array()) : QJsonValue(doc.object());
     loadValue(root, model.rootItem(), &model);
 }
+
+/* void populateParameterModel(TreeModel& model)
+{
+    auto root = QWrappedParameter(Controller::WrappedParameter(Controller::Parameter<int>(0)));
+
+    loadValue(root, model.rootItem(), &model);
+} */
 
 int main(int argc, char* argv[]){
 
@@ -119,11 +187,24 @@ subuk2.fromQVariant(3);
 QVariant variant3 = subuk2.toQVariant();
 qDebug() << "New Value of subuk2:" << variant3;
 
+QGuiApplication app(argc, argv);
+QQmlApplicationEngine engine;
+
+TreeModel* model = new TreeModel(&engine); // Assuming you have a parent object for your tree model
+
+loadParameter(QString("machine.number_of_channels"), QWrappedParameter(Parameter<uint8_t>(1)).toQVariant(), model);
+loadParameter(QString("channels.01.type"), QWrappedParameter(Parameter<int>(0)).toQVariant(), model);
+// Add other parameters similarly...
+
+
+// auto parameterModel = new TreeModel(&engine);
+// populateModel(*jsonModel);
+
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
-    QGuiApplication app(argc, argv);
-    QQmlApplicationEngine engine;
+  
+    
     
     qmlRegisterType<TreeModel>("QMLTreeView", 1, 0, "TreeModel");
 
