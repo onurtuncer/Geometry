@@ -1,24 +1,38 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 
-project(TreeViewExample LANGUAGES CXX)
+# https://github.com/Daguerreo/QMLTreeView/tree/main
 
-# Find Qt packages
-find_package(Qt5 COMPONENTS Core Quick QuickControls2 REQUIRED)
+project(parameterEditor VERSION 0.1 LANGUAGES CXX)
 
-# Set C++ standard
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Include Qt headers
-include_directories(${Qt5Core_INCLUDE_DIRS}
-                    ${Qt5Quick_INCLUDE_DIRS}
-                    ${Qt5QuickControls2_INCLUDE_DIRS})
+find_package(Qt5 REQUIRED COMPONENTS Core Qml Quick)
 
-# Add QML files to resource file
-qt5_add_resources(QML_RCC qml.qrc)
+set(PROJECT_SOURCES
+    main.cpp
+    # ParameterModel.cpp
+    tree_model.cpp
+    tree_item.cpp
+    json_entry.cpp
+    parameter_entry.cpp
+    qml.qrc
+    resources.qrc)
 
-# Create executable
-add_executable(${PROJECT_NAME} main.cpp ${QML_RCC})
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
+   
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core 
+                                              Qt5::Quick 
+                                              Qt5::Qml 
+                                              )
 
-# Link Qt libraries
-target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick Qt5::QuickControls2)
+# Include Qt headers for the specific target
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${Qt5Core_INCLUDE_DIRS}
+    ${Qt5Quick_INCLUDE_DIRS}
+    ${Qt5Qml_INCLUDE_DIRS}
+    )

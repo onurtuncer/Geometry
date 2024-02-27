@@ -1,6 +1,7 @@
 #ifndef PARAMETERENTRY_H
 #define PARAMETERENTRY_H
 
+#include <memory>
 #include "Parameter.h"
 #include "QWrappedParameter.h"
 
@@ -9,10 +10,11 @@ class ParameterEntry {
     Q_GADGET
     Q_PROPERTY(QString key READ GetKey WRITE SetKey)
     Q_PROPERTY(QVariant value READ GetValue WRITE SetValue)
+    //TODO add type 
 
 public:
     ParameterEntry();
-    ParameterEntry(const QString& key, const Controller::WrappedParameter& wrapped);
+    ParameterEntry(const QString& key, QWrappedParameter wrapped);
 
     QString GetKey() const;
     void SetKey(QString key);

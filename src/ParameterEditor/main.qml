@@ -1,96 +1,43 @@
 import QtQuick 2.15
+import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
-ApplicationWindow {
-    visible: true
-    width: 400
-    height: 400
-    title: "Tree View Example"
+import QMLTreeView 1.0
 
-    TreeView {
-        anchors.fill: parent
-        model: treeModel.rootItem
-        headerVisible: false
+Window {
+   id: root
 
-        TableViewColumn {
-            role: "name"
-            title: "Name"
-            width: 200
-        }
+   visible: true
+   width: 400
+   height: 400
+   title: qsTr("Json TreeView")
 
-        TableViewColumn {
-            title: "Value"
-            width: 200
-            delegate: Item {
-                Loader {
-                    property string settingType: modelData.children[0].name
-                    sourceComponent: {
-                        if (settingType === "bool") {
-                            return boolDelegate
-                        } else if (settingType === "vector") {
-                            return vectorDelegate
-                        } else if (settingType === "string") {
-                            return stringDelegate
-                        } else {
-                            return defaultDelegate
-                        }
-                    }
-                }
-            }
-        }
+   TreeView {
+      id: jsonView
 
-        itemDelegate: Item {
-            height: 20
-            width: treeView.width
+      anchors.fill: parent
+      anchors.margins: 1
 
-            Rectangle {
-                anchors.fill: parent
-                color: Style.isCurrentItem ? "lightblue" : "transparent"
-            }
-        }
-    }
+      model: jsonModel
+      rowPadding: 20
+      selectionEnabled: true
 
-    Component {
-        id: boolDelegate
-        CheckBox {
-            checked: modelData.children[1].children[1].value
-            onClicked: {
-                // Update the value in the model when the checkbox is clicked
-                modelData.children[1].children[1].value = checked
-            }
-        }
-    }
+      contentItem: RowLayout {
+         Text {
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
+            text: currentRow.currentData.key
+         }
 
-    Component {
-        id: vectorDelegate
-        Repeater {
-            model: modelData.children[1].children[1].value
-            delegate: TextInput {
-                text: modelData.children[1].children[1].value[index]
-                onTextChanged: {
-                    // Update the value in the model when the text is changed
-                    modelData.children[1].children[1].value[index] = text
-                }
-            }
-        }
-    }
+         Text {
+            Layout.fillWidth: true
+            Layout.rightMargin: 10
 
-    Component {
-        id: stringDelegate
-        TextInput {
-            text: modelData.children[1].children[1].value
-            onTextChanged: {
-                // Update the value in the model when the text is changed
-                modelData.children[1].children[1].value = text
-            }
-        }
-    }
-
-    Component {
-        id: defaultDelegate
-        Text {
-            text: modelData.children[1].children[1].value
-        }
-    }
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignRight
+            text: currentRow.currentData.value ? currentRow.currentData.value : ""
+         }
+      }
+   }
 }

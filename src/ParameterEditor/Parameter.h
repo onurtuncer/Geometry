@@ -195,7 +195,7 @@ namespace Controller{
             };
     };
 
-    class WrappedParameter : public std::enable_shared_from_this{
+    class WrappedParameter : public std::enable_shared_from_this<WrappedParameter>{
 
         public:
             WrappedParameter() : m_Type(ParameterType::Unknown) {}  // Default constructor [NEVER Omit this!!!]
@@ -203,14 +203,14 @@ namespace Controller{
             template< typename T>
             WrappedParameter(Parameter<T> param) : m_Type(param.getType()), m_TypeErasedParameter(param) {/*empty*/}
            
-            ParameterType GetType(){return m_Type;}
+            ParameterType GetType() const {return m_Type;}
 
-            std::shared_ptr<WrappedParameter> GetSharedPtr() {  // A shared ptr must exist before hand
+            std::shared_ptr<WrappedParameter> GetSharedPtr() {  // A shared ptr must exist beforehand
                 return shared_from_this();
             }
 
             template<typename T>
-            Parameter<T> GetParameter() {
+            Parameter<T> GetParameter() const {
 
                 ParameterType inferredType = inferParameterType<T>();
                 if (inferredType != m_Type) throw std::runtime_error("Type mistmatch while unwrapping paramater");
