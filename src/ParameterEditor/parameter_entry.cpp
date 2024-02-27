@@ -2,8 +2,8 @@
 
 ParameterEntry::ParameterEntry(){}
 
-ParameterEntry::ParameterEntry(const QString& key, const QVariant& value, QObject* parent)
-   : m_key(key), m_value(value) {}
+ParameterEntry::ParameterEntry(const QString& key, const QVariant& value, const int parameterType, QObject* parent)
+   : m_key(key), m_value(value), m_type(parameterType) {}
 
 QString ParameterEntry::key() const {
 
@@ -29,6 +29,11 @@ void ParameterEntry::setValue(const QVariant& value) {
 
     m_value = value;
     emit valueChanged(m_value);
+}
+
+int ParameterEntry::type() const{
+
+    return m_type;
 }
 
 void ParameterEntry::valueChanged(const QVariant& newValue) {

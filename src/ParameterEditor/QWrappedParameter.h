@@ -112,15 +112,17 @@ public:
                 variant.setValue(list);
                 break;
             }
-            case Ctrl::ParameterType::StringVector: {
-                auto vector = m_parameter.GetParameter<std::vector<std::string>>().getValue();
-                QVariantList list;
-                for (const auto& value : vector) {
-                    list.append(QString::fromStdString(value));
-                }
-                variant.setValue(list);
-                break;
-            }
+          case Ctrl::ParameterType::StringVector: {
+    auto vector = m_parameter.GetParameter<std::vector<std::string>>().getValue();
+    QVariantList list;
+    for (const auto& value : vector) {
+        // Convert each std::string to QString safely
+        QString convertedValue = QString::fromUtf8(value.c_str(), value.length());
+        list.append(convertedValue);
+    }
+    variant.setValue(list);
+    break;
+}
             case Ctrl::ParameterType::UInt8T:
                 variant.setValue(m_parameter.GetParameter<uint8_t>().getValue());
                 break;

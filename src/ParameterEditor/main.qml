@@ -13,34 +13,6 @@ Window {
    height: 400
    title: qsTr("Parameter TreeView")
 
-   // TreeView {
-   //    id: jsonView
-
-   //    anchors.fill: parent
-   //    anchors.margins: 1
-
-   //    model: jsonModel
-   //    rowPadding: 20
-   //    selectionEnabled: true
-
-   //    contentItem: RowLayout {
-   //       Text {
-   //          verticalAlignment: Text.AlignVCenter
-   //          horizontalAlignment: Text.AlignLeft
-   //          text: currentRow.currentData.key
-   //       }
-
-   //       Text {
-   //          Layout.fillWidth: true
-   //          Layout.rightMargin: 10
-
-   //          verticalAlignment: Text.AlignVCenter
-   //          horizontalAlignment: Text.AlignRight
-   //          text: currentRow.currentData.value ? currentRow.currentData.value : ""
-   //       }
-   //    }
-   // }
-
     TreeView {
       id: parameterView
 
@@ -58,14 +30,38 @@ Window {
             text: currentRow.currentData.key
          }
 
-         Text {
-            Layout.fillWidth: true
-            Layout.rightMargin: 10
+         // Text {
+         //    Layout.fillWidth: true
+         //    Layout.rightMargin: 10
 
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignRight
-            text: currentRow.currentData.value ? currentRow.currentData.value : ""
-         }
+         //    verticalAlignment: Text.AlignVCenter
+         //    horizontalAlignment: Text.AlignRight
+         //    text: currentRow.currentData.value ? currentRow.currentData.value : ""
+         // }
+
+         Text {
+        Layout.fillWidth: true
+        Layout.rightMargin: 10
+
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignRight
+        text: {
+            if (currentRow.currentData.value) {
+                // Check if the value is a QVariantList
+                if (Array.isArray(currentRow.currentData.value)) {
+                    // Convert QVariantList to string representation
+                    return currentRow.currentData.value.join(", ");
+                } else {
+                    // If it's not an array, convert to string directly
+                    return currentRow.currentData.value.toString();
+                }
+            } else {
+                return "";
+            }
+        }
+    }
+
+         
       }
    }
 

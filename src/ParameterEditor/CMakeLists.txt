@@ -17,7 +17,6 @@ set(PROJECT_SOURCES
     main.cpp
     tree_model.cpp
     tree_item.cpp
-    json_entry.cpp
     parameter_entry.cpp
     qml.qrc
     resources.qrc)
