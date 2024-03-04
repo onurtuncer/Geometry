@@ -125,18 +125,20 @@ QGuiApplication app(argc, argv);
 QQmlApplicationEngine engine;
 
 
-// auto parameterModel = new TreeModel(&engine);
-// populateModel(*jsonModel);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
+QObject::connect(&engine, &QQmlApplicationEngine::warnings, [](const QList<QQmlError> &warnings) {
+    for (const auto &warning : warnings) {
+        qDebug() << "QML Warning:" << warning.toString();
+    }
+});
   
     
     qmlRegisterType<TreeModel>("QMLTreeView", 1, 0, "TreeModel");
 
-
     auto parameterModel = new TreeModel(&engine); // Assuming you have a parent object for your tree model
+    
+
+// Assuming you have a method called initializeData in CustomTableModel
 
 loadParameter(QString("machine.number_of_channels"), QWrappedParameter(Parameter<uint8_t>(1)).toQVariant(), parameterModel);
 loadParameter(QString("channels.01.type"), QWrappedParameter(Parameter<int>(100)).toQVariant(), parameterModel);
@@ -145,8 +147,9 @@ loadParameter(QString("channels.01.trajectory.contouring_enabled"), QWrappedPara
 loadParameter(QString("channels.01.servo_names"), QWrappedParameter(Parameter<std::vector<std::string>>({"01","02","03"})).toQVariant(), parameterModel);
 
 
-
     engine.rootContext()->setContextProperty("parameterModel", parameterModel);
+
+    // engine.rootContext()->setContextProperty("table", table);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(

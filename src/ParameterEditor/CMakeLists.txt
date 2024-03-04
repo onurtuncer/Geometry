@@ -18,6 +18,7 @@ set(PROJECT_SOURCES
     tree_model.cpp
     tree_item.cpp
     parameter_entry.cpp
+    # CustomTableModel.cpp
     qml.qrc
     resources.qrc)
 
