@@ -13,6 +13,8 @@
 #include "ParameterManager.h"
 #include "QWrappedParameter.h"
 
+
+
 void loadParameter(const QString& paramName, const QVariant& paramValue, TreeModel* model) {
     
     QStringList hierarchy = paramName.split(".");
@@ -60,6 +62,16 @@ void loadParameter(const QString& paramName, const QVariant& paramValue, TreeMod
     // model->addItem(parent, parameterNode);
 }
 
+void populateModelFromParameterManager(Controller::ParameterManager& paramManager, TreeModel* parameterModel) {
+    
+    for (const auto& pair : paramManager.GetParameters()) {
+        const std::string& path = pair.first;
+        const QWrappedParameter& wrappedParam = QWrappedParameter::fromWrappedParameter(pair.second);
+        const QVariant value = wrappedParam.toQVariant();
+        loadParameter(QString::fromStdString(path), value, parameterModel);
+    }
+}
+
 
 /* void populateModel(TreeModel& model)
 {
@@ -77,6 +89,7 @@ void loadParameter(const QString& paramName, const QVariant& paramValue, TreeMod
     loadValue(root, model.rootItem(), &model);
 }
  */
+
 int main(int argc, char* argv[]){
 
  using namespace Controller;
@@ -97,34 +110,31 @@ int main(int argc, char* argv[]){
   pm1.AddParameter("channels.01.trajectory.deceleration_limit",  Parameter<double>(4000));
   pm1.AddParameter("channels.01.servo_names", Parameter<std::vector<std::string>>({"01","02","03"}));
   pm1.AddParameter("bus.io_names", Parameter<std::vector<std::string>>({"01"}));
+  pm1.AddParameter("offsets.g54"              , Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
+  pm1.AddParameter("offsets.g55"              , Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
+  pm1.AddParameter("offsets.g56"              , Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
+  pm1.AddParameter("offsets.g57"              , Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
+  pm1.AddParameter("offsets.g58"              , Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
+  pm1.AddParameter("offsets.g59"              , Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
+  pm1.AddParameter("offsets.activeOffset"     , Parameter<std::string>("g54")); 
+  pm1.AddParameter("tools.T101.diameter"      , Parameter<double>(10.0));
+  pm1.AddParameter("tools.T101.lengthOffset"  , Parameter<double>(0.0));
+  pm1.AddParameter("tools.T102.diameter"      , Parameter<double>(10.0));
+  pm1.AddParameter("tools.T102.lengthOffset"  , Parameter<double>(0.0));
+  pm1.AddParameter("tools.T103.diameter"      , Parameter<double>(10.0));
+  pm1.AddParameter("tools.T103.lengthOffset"  , Parameter<double>(0.0));
+  pm1.AddParameter("tools.T104.diameter"      , Parameter<double>(10.0));
+  pm1.AddParameter("tools.T104.lengthOffset"  , Parameter<double>(0.0));
+  pm1.AddParameter("tools.T105.diameter"      , Parameter<double>(10.0));
+  pm1.AddParameter("tools.T105.lengthOffset"  , Parameter<double>(0.0));
+  pm1.AddParameter("tools.T106.diameter"      , Parameter<double>(10.0));
+  pm1.AddParameter("tools.T106.lengthOffset"  , Parameter<double>(0.0));
+  pm1.AddParameter("tools.T107.diameter"      , Parameter<double>(10.0));
+  pm1.AddParameter("tools.T107.lengthOffset"  , Parameter<double>(0.0));
 
- auto abuk = Controller::WrappedParameter(Controller::Parameter<bool>(true));
- auto subuk = QWrappedParameter(abuk);
-
- auto abuk2 = Controller::WrappedParameter(Controller::Parameter<int>(10));
- auto subuk2 = QWrappedParameter(abuk2);
-
- // Convert QWrappedParameter to QVariant
-QVariant variant = subuk.toQVariant();
-QVariant variant2 = subuk2.toQVariant();
-
-qDebug() << "Value of subuk:" << variant;
-qDebug() << "Value of subuk2:" << variant2;
-
-variant2 = 3;
-
-subuk2.fromQVariant(3);
-QVariant variant3 = subuk2.toQVariant();
-qDebug() << "New Value of subuk2:" << variant3;
-
-auto variant4 = QWrappedParameter(Parameter<std::vector<std::string>>({"01","02","03"})).toQVariant();
-
-qDebug() << "variant4:" << variant4;
 
 QGuiApplication app(argc, argv);
 QQmlApplicationEngine engine;
-
-
 
 QObject::connect(&engine, &QQmlApplicationEngine::warnings, [](const QList<QQmlError> &warnings) {
     for (const auto &warning : warnings) {
@@ -132,27 +142,23 @@ QObject::connect(&engine, &QQmlApplicationEngine::warnings, [](const QList<QQmlE
     }
 });
   
+qmlRegisterType<TreeModel>("QMLTreeView", 1, 0, "TreeModel");
+
+auto parameterModel = new TreeModel(&engine); // Assuming you have a parent object for your tree model
     
-    qmlRegisterType<TreeModel>("QMLTreeView", 1, 0, "TreeModel");
+populateModelFromParameterManager(pm1, parameterModel);
 
-    auto parameterModel = new TreeModel(&engine); // Assuming you have a parent object for your tree model
-    
+// loadParameter(QString("machine.number_of_channels"), QWrappedParameter(Parameter<uint8_t>(1)).toQVariant(), parameterModel);
+// loadParameter(QString("channels.01.type"), QWrappedParameter(Parameter<int>(100)).toQVariant(), parameterModel);
+// loadParameter(QString("channels.01.number_of_axes"), QWrappedParameter(Parameter<int>(3)).toQVariant(), parameterModel);
+// loadParameter(QString("channels.01.trajectory.contouring_enabled"), QWrappedParameter(Parameter<bool>(true)).toQVariant(), parameterModel);
+// loadParameter(QString("channels.01.servo_names"), QWrappedParameter(Parameter<std::vector<std::string>>({"01","02","03"})).toQVariant(), parameterModel);
 
-// Assuming you have a method called initializeData in CustomTableModel
+engine.rootContext()->setContextProperty("parameterModel", parameterModel);
 
-loadParameter(QString("machine.number_of_channels"), QWrappedParameter(Parameter<uint8_t>(1)).toQVariant(), parameterModel);
-loadParameter(QString("channels.01.type"), QWrappedParameter(Parameter<int>(100)).toQVariant(), parameterModel);
-loadParameter(QString("channels.01.number_of_axes"), QWrappedParameter(Parameter<int>(3)).toQVariant(), parameterModel);
-loadParameter(QString("channels.01.trajectory.contouring_enabled"), QWrappedParameter(Parameter<bool>(true)).toQVariant(), parameterModel);
-loadParameter(QString("channels.01.servo_names"), QWrappedParameter(Parameter<std::vector<std::string>>({"01","02","03"})).toQVariant(), parameterModel);
+const QUrl url(QStringLiteral("qrc:/main.qml"));
 
-
-    engine.rootContext()->setContextProperty("parameterModel", parameterModel);
-
-    // engine.rootContext()->setContextProperty("table", table);
-
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(
+QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreated,
         &app,

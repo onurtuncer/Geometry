@@ -18,9 +18,9 @@ set(PROJECT_SOURCES
     tree_model.cpp
     tree_item.cpp
     parameter_entry.cpp
-    # CustomTableModel.cpp
     qml.qrc
-    resources.qrc)
+    QParameterManager.cpp
+    )
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
    

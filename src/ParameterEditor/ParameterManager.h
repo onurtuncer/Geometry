@@ -57,11 +57,25 @@ namespace Controller {
         return result;
     }
 
-        void Deserialize(const nlohmann::json& node) {
+    void Deserialize(const nlohmann::json& node) {
 
-            FlushAllParameters();
-            TraverseJSON(m_WrappedMap, node);
+        FlushAllParameters();
+        TraverseJSON(m_WrappedMap, node);
+    }
+
+    std::vector<std::pair<std::string, WrappedParameter>> GetParameters() const {
+        
+        std::vector<std::pair<std::string, WrappedParameter>> parameters;
+        for (const auto& pair : m_WrappedMap) {
+            parameters.emplace_back(pair.first, pair.second);
         }
+        return parameters;
+    }
+
+    void UpdateParameter(const std::string& path, const WrappedParameter& value) {
+        
+      m_WrappedMap[path] = value;
+   }
 
     private:
        void TraverseJSON(std::unordered_map<std::string, WrappedParameter>& result, const nlohmann::json& node, const std::string& parentKey = "") {
