@@ -2,17 +2,26 @@
 #define QPARAMETERMANAGER_H
 
 #include <QObject>
+#include <QtQml>
 #include "ParameterManager.h"
 #include "QWrappedParameter.h"
 
 class QParameterManager : public QObject, public Controller::ParameterManager {
-    Q_OBJECT
+  Q_OBJECT
+  QML_ELEMENT
 
-public slots:
+  public:
+    static QParameterManager* instance();
+
+  public slots:
     void updateParameter(const QString& path, const QVariant& value);
 
-signals:
+  signals:
     void parameterUpdated(const QString& path, const QVariant& value);
+
+ private:
+     QParameterManager(QObject *parent = nullptr);
+    static QParameterManager* m_instance;
 };
 
 #endif // QPARAMETERMANAGER_H

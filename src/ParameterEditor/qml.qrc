@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>TreeView.qml</file>
         <file>TreeViewItem.qml</file>
+        <file>BoolDelegate.qml</file>
     </qresource>
 </RCC>

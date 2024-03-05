@@ -1,9 +1,10 @@
 #include "parameter_entry.h"
+#include <QRegularExpression>
 
 ParameterEntry::ParameterEntry(){}
 
-ParameterEntry::ParameterEntry(const QString& key, const QVariant& value, const int parameterType, QObject* parent)
-   : m_key(key), m_value(value), m_type(parameterType) {}
+ParameterEntry::ParameterEntry(const QString& key, const QVariant& value, const int parameterType, const QString& path, QObject* parent)
+   : m_key(key), m_value(value), m_type(parameterType), m_path(path) {}
 
 QString ParameterEntry::key() const {
 
@@ -36,6 +37,11 @@ int ParameterEntry::type() const{
     return m_type;
 }
 
+QString ParameterEntry::path() const{
+
+    return m_path;
+}
+
 void ParameterEntry::valueChanged(const QVariant& newValue) {
     // Emit the valueChanged signal
     emit valueChanged(newValue);
@@ -63,4 +69,33 @@ QString ParameterEntry::PrettyKey() const{
     result = result.trimmed();
     return result;
 }
+
+// QString ParameterEntry::PrettyKey() const {
+//     QString originalString = m_key;
+//     QStringList parts;
+    
+//     // Split by underscore
+//     QStringList underscoreParts = originalString.split('_');
+//     for (const QString& part : underscoreParts) {
+//         // Split camel case words
+//         QStringList camelCaseParts = part.split(QRegularExpression("(?=[A-Z])"));
+//         for (const QString& camelPart : camelCaseParts) {
+//             parts.append(camelPart);
+//         }
+//     }
+    
+//     QString result;
+//     for (int i = 0; i < parts.size(); ++i) {
+//         QString part = parts.at(i);
+//         if (i == 0 || part.toLower() != "of") {
+//             // Capitalize first letter
+//             part[0] = part[0].toUpper();
+//         } else {
+//             // Convert "of" to lowercase if not the first word
+//             part = part.toLower();
+//         }
+//         result += part;
+//     }
+//     return result;
+// }
 

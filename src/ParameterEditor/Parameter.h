@@ -28,11 +28,11 @@ namespace Controller{
 
     enum class ParameterType {
         Unknown = 0,
-        Integer,
-        UnsignedInt,
-        Double,
-        Float,
-        Bool,
+        Integer = 1,
+        UnsignedInt = 2,
+        Double = 3,
+        Float = 4,
+        Bool = 5 ,
         Char,
         String,
         SignedChar,

@@ -89,12 +89,12 @@ Item {
    property Component contentItem: Text {
       id: contentData
 
-      anchors.verticalCenter: parent.verticalCenter
-      verticalAlignment: Text.AlignVCenter
+     anchors.verticalCenter: parent.verticalCenter
+     verticalAlignment: Text.AlignVCenter
 
-      color: currentRow.isSelectedIndex ? root.selectedItemColor : root.color
-      text: currentRow.currentData
-      font: root.font
+     color: currentRow.isSelectedIndex ? root.selectedItemColor : root.color
+     text: currentRow.currentData
+     font: root.font
    }
 
    property Component hoverComponent: Rectangle {
@@ -173,6 +173,7 @@ Item {
                      Layout.leftMargin: parent.spacing
 
                      property QtObject currentRow: _prop
+                    
 
                      TapHandler { onSingleTapped: _prop.toggle() }
                   }
