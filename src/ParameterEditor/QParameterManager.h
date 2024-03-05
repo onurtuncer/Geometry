@@ -13,8 +13,7 @@ class QParameterManager : public QObject, public Controller::ParameterManager {
   public:
     static QParameterManager* instance();
 
-  public slots:
-    void updateParameter(const QString& path, const QVariant& value);
+    Q_INVOKABLE void updateParameter(const QString& path, const QVariant& value, const int type);
 
   signals:
     void parameterUpdated(const QString& path, const QVariant& value);

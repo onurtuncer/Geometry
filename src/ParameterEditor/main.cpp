@@ -113,13 +113,15 @@ int main(int argc, char* argv[]){
   
 qmlRegisterType<TreeModel>("QMLTreeView", 1, 0, "TreeModel");
 
-
+// Register QParameterManager with the QML engine
+qmlRegisterSingletonInstance<QParameterManager>("QMLParameterManager", 1, 0, "QParameterManager", pm1);
 
 auto parameterModel = new TreeModel(&engine); // Assuming you have a parent object for your tree model
     
 populateModelFromParameterManager(pm1, parameterModel);
 
 engine.rootContext()->setContextProperty("parameterModel", parameterModel);
+engine.rootContext()->setContextProperty("parameterManager", pm1);
 
 const QUrl url(QStringLiteral("qrc:/main.qml"));
 

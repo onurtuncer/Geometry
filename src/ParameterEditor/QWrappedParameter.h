@@ -134,9 +134,9 @@ public:
         return variant;
     }
 
-   void fromQVariant(const QVariant& variant) {
+   void fromQVariantAndType(const QVariant& variant, const int type) {
 
-    switch (GetType()) {
+    switch (static_cast<Controller::ParameterType>(type)) {
         case Controller::ParameterType::Bool:
             m_parameter = Controller::WrappedParameter(Controller::Parameter<bool>(variant.toBool()));
             break;

@@ -13,9 +13,10 @@ QParameterManager* QParameterManager::instance() {
     return m_instance;
 }
 
-void QParameterManager::updateParameter(const QString& path, const QVariant& value) {
-    QWrappedParameter wrappedValue;
-    wrappedValue.fromQVariant(value);
-    Controller::ParameterManager::UpdateParameter(path.toStdString(), wrappedValue.toWrappedParameter());
+void QParameterManager::updateParameter(const QString& path, const QVariant& value, const int type) {
+
+    QWrappedParameter qWrappedValue;
+    qWrappedValue.fromQVariantAndType(value, type);
+    Controller::ParameterManager::UpdateParameter(path.toStdString(), qWrappedValue.toWrappedParameter());
     emit parameterUpdated(path, value);
 }

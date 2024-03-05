@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import QMLTreeView 1.0
+import QMLParameterManager 1.0
 
 Window {
    id: root
@@ -32,6 +33,9 @@ Window {
     anchors.margins: 1
 
     model: parameterModel
+
+    property QParameterManager manager: parameterManager
+    
     rowPadding: 20
     selectionEnabled: true
 
@@ -77,32 +81,38 @@ Window {
    }
 
    Component {
-       id: boolDelegate
-       RowLayout {
-           width: currentWidth
-           height: currentHeight
+    id: boolDelegate
 
-           Text {
-               verticalAlignment: Text.AlignVCenter
-               horizontalAlignment: Text.AlignLeft
-               text: currentData.path
-           }
+    RowLayout {
+        width: currentWidth
+        height: currentHeight
 
-           ColumnLayout {
-               Layout.alignment: Qt.AlignVCenter
+        Text {
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
+            text: currentData.key
+        }
 
-               Item {
-                   Layout.fillWidth: true
-               }
+        ColumnLayout {
+            Layout.alignment: Qt.AlignVCenter
 
-               CheckBox {
-                   id: checkBox
-                   checked: currentData.value
-                   onCheckedChanged: currentData.value = checked
-               }
-           }
-       }
-   }
+            Item {
+                Layout.fillWidth: true
+            }
+
+            CheckBox {
+                id: checkBox
+                checked: currentData.value
+                onCheckedChanged: {
+                    console.log("Parameter path:", currentData.path, ", checked:", checked);
+                    parameterManager.updateParameter(currentData.path, checked, currentData.type);
+                }
+            }
+        }
+    }
+}
+
+
 
    
 }
