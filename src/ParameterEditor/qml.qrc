@@ -3,9 +3,11 @@
         <file>main.qml</file>
         <file>TreeView.qml</file>
         <file>TreeViewItem.qml</file>
+        <file>ParameterTreeView.qml</file>
         <file>BoolDelegate.qml</file>
         <file>CharDelegate.qml</file>
         <file>DoubleDelegate.qml</file>
+        <file>DoubleVectorDelegate.qml</file>
         <file>IntDelegate.qml</file>
         <file>UnsignedIntDelegate.qml</file>
         <file>SignedCharDelegate.qml</file>

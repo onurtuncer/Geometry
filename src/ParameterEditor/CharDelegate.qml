@@ -16,7 +16,7 @@ RowLayout {
         width: parent.width / 3
         model: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
                  "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-        editable: false // Ensure the ComboBox is not editable
+        editable: false 
 
         // When an item is selected, update the parameter manager
         onActivated: {

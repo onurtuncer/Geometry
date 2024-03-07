@@ -12,31 +12,6 @@ class ParameterEntry {
     Q_PROPERTY(int type READ type)
     Q_PROPERTY(QString path READ path)
 
-    // enum ParameterType {
-    //     Unknown = 0,
-    //     Integer,
-    //     UnsignedInt,
-    //     Double,
-    //     Float,
-    //     Bool,
-    //     Char,
-    //     String,
-    //     SignedChar,
-    //     PairDoubleDouble,
-    //     PairBoolDouble,
-    //     PairStringString,
-    //     RxPdoTypeEnum,
-    //     TxPdoTypeEnum,
-    //     ModeOfOperation,
-    //     ModeOfOperationVector,
-    //     DeviceType,
-    //     Int32T,
-    //     Int8T,
-    //     DoubleVector,
-    //     StringVector,
-    //     UInt8T
-    // };
-
 public:
     ParameterEntry();
     ParameterEntry(const QString& key, const QVariant& value, const int parameterType, const QString& path = QString(), QObject* parent = nullptr);

@@ -88,6 +88,7 @@ void loadParameter(const QString& path, const QVariant& paramValue, int type, Tr
 void populateModelFromParameterManager(QParameterManager* paramManager, TreeModel* parameterModel) {
     
     for (const auto& pair : paramManager->GetParameters()) {
+      
         const std::string& path = pair.first;
         const QWrappedParameter& wrappedParam = QWrappedParameter::fromWrappedParameter(pair.second);
         const QVariant value = wrappedParam.toQVariant();
