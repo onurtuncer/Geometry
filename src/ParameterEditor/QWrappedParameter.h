@@ -134,40 +134,42 @@ public:
         return variant;
     }
 
-   void fromQVariantAndType(const QVariant& variant, const int type) {
+  static QWrappedParameter fromQVariantAndType(const QVariant& variant, const int type) {
+
+    Ctrl::WrappedParameter wrappedParameter;
 
     switch (static_cast<Controller::ParameterType>(type)) {
         case Controller::ParameterType::Bool:
-            m_parameter = Controller::WrappedParameter(Controller::Parameter<bool>(variant.toBool()));
+            wrappedParameter = Controller::WrappedParameter(Controller::Parameter<bool>(variant.toBool()));
             break;
         case Controller::ParameterType::Integer:
-            m_parameter = Controller::WrappedParameter(Controller::Parameter<int>(variant.toInt()));
+            wrappedParameter = Controller::WrappedParameter(Controller::Parameter<int>(variant.toInt()));
             break;
         case Controller::ParameterType::UnsignedInt:
-            m_parameter = Controller::WrappedParameter(Controller::Parameter<unsigned int>(variant.toUInt()));
+            wrappedParameter = Controller::WrappedParameter(Controller::Parameter<unsigned int>(variant.toUInt()));
             break;
         case Controller::ParameterType::Double:
-            m_parameter = Controller::WrappedParameter(Controller::Parameter<double>(variant.toDouble()));
+            wrappedParameter = Controller::WrappedParameter(Controller::Parameter<double>(variant.toDouble()));
             break;
         case Controller::ParameterType::Float:
-            m_parameter = Controller::WrappedParameter(Controller::Parameter<float>(variant.toFloat()));
+            wrappedParameter = Controller::WrappedParameter(Controller::Parameter<float>(variant.toFloat()));
             break;
         case Controller::ParameterType::Char:
-            m_parameter = Controller::WrappedParameter(Controller::Parameter<char>(variant.toChar().toLatin1()));
+            wrappedParameter = Controller::WrappedParameter(Controller::Parameter<char>(variant.toChar().toLatin1()));
             break;
         case Controller::ParameterType::String:
-            m_parameter = Controller::WrappedParameter(Controller::Parameter<std::string>(variant.toString().toStdString()));
+            wrappedParameter = Controller::WrappedParameter(Controller::Parameter<std::string>(variant.toString().toStdString()));
             break;
         case Controller::ParameterType::PairDoubleDouble: {
             QVariantList list = variant.toList();
             auto pair = std::make_pair(list[0].toDouble(), list[1].toDouble());
-            m_parameter = Controller::WrappedParameter(Controller::Parameter<std::pair<double, double>>(pair));
+            wrappedParameter = Controller::WrappedParameter(Controller::Parameter<std::pair<double, double>>(pair));
             break;
         }
         case Controller::ParameterType::PairStringString: {
             QVariantList list = variant.toList();
             auto pair = std::make_pair(list[0].toString().toStdString(), list[1].toString().toStdString());
-            m_parameter = Controller::WrappedParameter(Controller::Parameter<std::pair<std::string, std::string>>(pair));
+            wrappedParameter = Controller::WrappedParameter(Controller::Parameter<std::pair<std::string, std::string>>(pair));
             break;
         }
         // Handle other parameter types here
@@ -175,7 +177,10 @@ public:
             qDebug() << "Unsupported parameter type";
             break;
     }
-  }
+
+    return QWrappedParameter(wrappedParameter);
+}
+
 
 private:
     Ctrl::WrappedParameter m_parameter; //TODO replace this with a shared ptr

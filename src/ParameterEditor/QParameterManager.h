@@ -7,19 +7,22 @@
 #include "QWrappedParameter.h"
 
 class QParameterManager : public QObject, public Controller::ParameterManager {
-  Q_OBJECT
-  QML_ELEMENT
+    Q_OBJECT
+    QML_ELEMENT
 
-  public:
-    static QParameterManager* instance();
+public:
+    static QParameterManager* Instance();
 
-    Q_INVOKABLE void updateParameter(const QString& path, const QVariant& value, const int type);
+    Q_INVOKABLE void UpdateParameter(const QString& path, const QVariant& value, const int type);
 
-  signals:
-    void parameterUpdated(const QString& path, const QVariant& value);
+signals:
+    void ParameterUpdated(const QString& path, const QVariant& value);
 
- private:
-     QParameterManager(QObject *parent = nullptr);
+public slots:
+    void SendParameterJSON();
+
+private:
+    QParameterManager(QObject *parent = nullptr);
     static QParameterManager* m_instance;
 };
 

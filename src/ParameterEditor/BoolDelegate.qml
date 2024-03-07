@@ -24,7 +24,7 @@ RowLayout {
             checked: displayData.value
             onCheckedChanged: {
                 console.log("Parameter path:", displayData.path, ", checked:", checked);
-                parameterManager.updateParameter(displayData.path, checked, displayData.type);
+                parameterManager.UpdateParameter(displayData.path, checked, displayData.type);
             }
         }
     }

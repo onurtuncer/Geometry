@@ -4,7 +4,6 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import QMLTreeView 1.0
-import QMLParameterManager 1.0
 
 Window {
    id: root
@@ -23,8 +22,6 @@ Window {
 
     model: parameterModel
 
-    property QParameterManager manager: parameterManager
-    
     rowPadding: 20
     selectionEnabled: true
 
@@ -42,8 +39,22 @@ Window {
                                return headerDelegate;
                            case 5:
                                return boolDelegate;
-                        //    case 1:
-                        //        return intDelegate;
+                           case 6:
+                               return charDelegate;
+                           case 1:
+                               return intDelegate;
+                            case 2:
+                               return unsignedIntDelegate; 
+                            case 8:
+                               return signedCharDelegate; 
+                            case 17:
+                               return intDelegate; // int32T
+                            case 18: 
+                               return intDelegate; // int8T
+                            case 21:
+                               return intDelegate; // uint8T
+                            case 3:
+                               return doubleDelegate;
                         //    case 7:
                         //        return stringDelegate;
                            // Add cases for other types as needed
@@ -72,45 +83,56 @@ Window {
    Component {
      id: boolDelegate
      BoolDelegate {
-       displayData:   delegateData
+       displayData: delegateData
        height: delegateHeight
        width:  delegateWidth
-    //    parameterManager: root.manager
+     }
    }
-}
 
-//    Component {
-//     id: boolDelegate
+   Component {
+     id: intDelegate
+     IntDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+   }
 
-//     RowLayout {
-//         width: delegateWidth
-//         height: delegateHeight
+   Component {
+     id: unsignedIntDelegate
+     IntDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+   }
 
-//         Text {
-//             verticalAlignment: Text.AlignVCenter
-//             horizontalAlignment: Text.AlignLeft
-//             text: delegateData.key
-//         }
+    Component {
+     id: signedCharDelegate
+     IntDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+   }
 
-//         ColumnLayout {
-//             Layout.alignment: Qt.AlignVCenter
+    Component {
+     id: doubleDelegate
+     DoubleDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
 
-//             Item {
-//                 Layout.fillWidth: true
-//             }
-
-//             CheckBox {
-//                 id: checkBox
-//                 checked: delegateData.value
-//                 onCheckedChanged: {
-//                     console.log("Parameter path:", delegateData.path, ", checked:", checked);
-//                     parameterManager.updateParameter(delegateData.path, checked, delegateData.type);
-//                 }
-//             }
-//         }
-//     }
-// }
-
+  Component {
+     id: charDelegate
+     CharDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
 
 }
 

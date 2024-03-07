@@ -39,32 +39,17 @@ class TreeItem
     friend class TreeModel;
 
 public:
-    //! Create an empty item.
     TreeItem();
-
-    //! Create an item with the given data.
     explicit TreeItem(const QVariant& data);
-
-    //! Destroy the item. It will destroy every child.
     ~TreeItem();
 
-    //! Return the stored data of the node.
     const QVariant& data() const;
-
-    //! Set the internal data of the node.
     void setData(const QVariant& data);
-
-    //! Return the number of children nodes.
     int childCount() const;
-
     int row() const;
-
-    //! Return true if the node is a leaf node (no children).
     bool isLeaf() const;
-
-    //! Return the depth of this node inside the tree.
     int depth() const;
-
+    
     TreeItem* getChild(int row) const{
 
       if (row >= 0 && row < _childItems.size()) return _childItems[row];
