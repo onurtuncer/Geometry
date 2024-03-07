@@ -14,20 +14,9 @@ Window {
    height: 400
    title: qsTr("Parameter TreeView")
 
-//    Rectangle {
-//     id: myTree
-//     objectName: "myTree"
-
-//     property Component internalDelegate
-//     property variant internalModel
-
    TreeView {
 
-    //  property Component internalDelegate
-    //  property variant internalModel
-
     id: parameterView
-    // objectName: "parameterView"
 
     anchors.fill: parent
     anchors.margins: 1
@@ -62,9 +51,9 @@ Window {
                    }
              
                     // Bind currentData property to currentRow.currentData
-                    property var currentData: currentRow.currentData
-                    property var currentHeight: contentItem.height
-                    property var currentWidth: parameterView.width
+                    property var delegateData: currentRow.currentData
+                    property var delegateHeight: contentItem.height
+                    property var delegateWidth: parameterView.width
                
                }
            }
@@ -76,45 +65,53 @@ Window {
        Text {
            verticalAlignment: Text.AlignVCenter
            horizontalAlignment: Text.AlignLeft
-           text: currentData.key
+           text: delegateData.key
        }
    }
 
    Component {
-    id: boolDelegate
-
-    RowLayout {
-        width: currentWidth
-        height: currentHeight
-
-        Text {
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignLeft
-            text: currentData.key
-        }
-
-        ColumnLayout {
-            Layout.alignment: Qt.AlignVCenter
-
-            Item {
-                Layout.fillWidth: true
-            }
-
-            CheckBox {
-                id: checkBox
-                checked: currentData.value
-                onCheckedChanged: {
-                    console.log("Parameter path:", currentData.path, ", checked:", checked);
-                    parameterManager.updateParameter(currentData.path, checked, currentData.type);
-                }
-            }
-        }
-    }
+     id: boolDelegate
+     BoolDelegate {
+       displayData:   delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    //    parameterManager: root.manager
+   }
 }
 
+//    Component {
+//     id: boolDelegate
+
+//     RowLayout {
+//         width: delegateWidth
+//         height: delegateHeight
+
+//         Text {
+//             verticalAlignment: Text.AlignVCenter
+//             horizontalAlignment: Text.AlignLeft
+//             text: delegateData.key
+//         }
+
+//         ColumnLayout {
+//             Layout.alignment: Qt.AlignVCenter
+
+//             Item {
+//                 Layout.fillWidth: true
+//             }
+
+//             CheckBox {
+//                 id: checkBox
+//                 checked: delegateData.value
+//                 onCheckedChanged: {
+//                     console.log("Parameter path:", delegateData.path, ", checked:", checked);
+//                     parameterManager.updateParameter(delegateData.path, checked, delegateData.type);
+//                 }
+//             }
+//         }
+//     }
+// }
 
 
-   
 }
 
   // TreeView {
@@ -180,4 +177,3 @@ Window {
          
   //     }
   // }  // treeView
-
