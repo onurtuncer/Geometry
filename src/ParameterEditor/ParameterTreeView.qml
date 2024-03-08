@@ -50,6 +50,12 @@ TreeView {
                             return boolDoublePairDelegate;  
                         case 11:
                             return stringStringPairDelegate;
+                        case 12:
+                            return rxPDOTypeDelegate;
+                        case 13:
+                            return txPDOTypeDelegate;
+                        case 14:
+                            return modeOfOperationDelegate;
                         case 19:
                             return doubleVectorDelegate;
                         case 17:
@@ -185,6 +191,33 @@ Component {
   Component {
      id: boolDoublePairDelegate
      BoolDoublePairDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
+
+  Component {
+     id: rxPDOTypeDelegate
+     RxPDOTypeDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
+
+   Component {
+     id: txPDOTypeDelegate
+     TxPDOTypeDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
+
+   Component {
+     id: modeOfOperationDelegate
+     ModeOfOperationDelegate {
        displayData: delegateData
        height: delegateHeight
        width:  delegateWidth

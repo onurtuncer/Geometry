@@ -22,8 +22,6 @@
 
 #include <memory>
 
-// #include <QMetaType>
-
 namespace Controller{
 
     enum class ParameterType {

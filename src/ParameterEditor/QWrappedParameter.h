@@ -196,15 +196,22 @@ public:
             wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<std::vector<std::string>>(vector));
             break;
         }
+        case Ctrl::ParameterType::RxPdoTypeEnum: {
+          wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<Ctrl::Ethercat::DS402::RxPdoTypeEnum>(static_cast<Ctrl::Ethercat::DS402::RxPdoTypeEnum>(variant.toInt())));
+          break;
+       }
+       case Ctrl::ParameterType::TxPdoTypeEnum: {
+          wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<Ctrl::Ethercat::DS402::TxPdoTypeEnum>(static_cast<Ctrl::Ethercat::DS402::TxPdoTypeEnum>(variant.toInt())));
+          break;
+       }
         // Handle other parameter types here
         default:
-            qDebug() << "Unsupported parameter type, with id:" << type;
+            qDebug() << "Unsupported parameter type, with type enumaration:" << type;
             break;
     }
 
     return QWrappedParameter(wrappedParameter);
 }
-
 
 private:
     Ctrl::WrappedParameter m_parameter; //TODO replace this with a shared ptr

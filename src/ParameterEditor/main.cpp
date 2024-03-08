@@ -55,6 +55,8 @@ void setupParameters(QParameterManager* pm1) {
   pm1->AddParameter("stringPair", Parameter<std::pair<std::string, std::string>>(std::make_pair("string1", "string2")));
   pm1->AddParameter("doublePair", Parameter<std::pair<double, double>>(std::make_pair(-100.0, 100.0)));
   pm1->AddParameter("bool_double_pair", Parameter<std::pair<bool, double>>(std::make_pair(false, 100.0)));
+  pm1->AddParameter("rxPDO", Parameter<Controller::Ethercat::DS402::RxPdoTypeEnum>(Controller::Ethercat::DS402::RxPdoTypeEnum::RxPdoCSTCSPCSV));
+  pm1->AddParameter("txPDO", Parameter<Controller::Ethercat::DS402::TxPdoTypeEnum>(Controller::Ethercat::DS402::TxPdoTypeEnum::TxPdoStandard));
 }
 
 void loadParameter(const QString& path, const QVariant& paramValue, int type, TreeModel* model) {

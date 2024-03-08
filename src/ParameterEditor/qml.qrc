@@ -16,5 +16,8 @@
         <file>StringStringPairDelegate.qml</file>
         <file>DoubleDoublePairDelegate.qml</file>
         <file>BoolDoublePairDelegate.qml</file>
+        <file>RxPDOTypeDelegate.qml</file>
+        <file>TxPDOTypeDelegate.qml</file>
+        <file>ModeOfOperationDelegate.qml</file>
     </qresource>
 </RCC>

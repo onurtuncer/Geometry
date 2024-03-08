@@ -12,26 +12,28 @@ RowLayout {
     }
 
     ComboBox {
-        id: comboBox
+        id: txPdoTypeComboBox
         width: parent.width / 3
         model: [
-            { value: 0, display: "NA" },
-            { value: 1, display: "RxPdoStandard" },
-            { value: 2, display: "RxPdoCSP" },
-            { value: 3, display: "RxPdoCSV" },
-            { value: 4, display: "RxPdoCSTCSPCSV" }
+            { value: -128, display: "NA" },
+            { value: -127, display: "TxPdoStandard" },
+            { value: -126, display: "TxPdoCSP" },
+            { value: -125, display: "TxPdoCSV" },
+            { value: -124, display: "TxPdoCSTCSPCSV" }
         ]
         textRole: "display"
         editable: false 
 
+        // When an item is selected, update the parameter manager
         onActivated: {
             var selectedValue = model[currentIndex].value;
             console.log("Parameter path:", displayData.path, ", value:", selectedValue);
             parameterManager.UpdateParameter(displayData.path, selectedValue, displayData.type);
         }
 
+        // Set the initial selection based on displayData.value
         Component.onCompleted: {
-            currentIndex = displayData.value;
+            currentIndex = displayData.value + 128; // Convert to index
         }
     }
 }
