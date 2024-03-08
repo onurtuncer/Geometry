@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 RowLayout {
-    
+
     property var displayData
 
     Text {
@@ -12,12 +12,12 @@ RowLayout {
         text: displayData.key
     }
 
-    ColumnLayout {
-        Layout.alignment: Qt.AlignVCenter
+    // ColumnLayout {
+    //     Layout.alignment: Qt.AlignVCenter
 
-        Item {
-            Layout.fillWidth: true
-        }
+    //     Item {
+    //         Layout.fillWidth: true
+    //     }
 
         TextInput {
             id: textInput
@@ -30,5 +30,5 @@ RowLayout {
                 parameterManager.UpdateParameter(displayData.path, textInput.text, displayData.type);
             }
         }
-    }
+    // }
 }

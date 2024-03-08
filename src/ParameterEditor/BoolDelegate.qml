@@ -12,14 +12,14 @@ RowLayout {
         text: displayData.key
     }
 
-    ColumnLayout {
-        Layout.alignment: Qt.AlignVCenter
+    // ColumnLayout {
+    //     Layout.alignment: Qt.AlignVCenter
 
-        Item {
-            Layout.fillWidth: true
-        }
+    //     Item {
+    //         Layout.fillWidth: true
+    //     }
 
-        CheckBox {
+    CheckBox {
             id: checkBox
             checked: displayData.value
             onCheckedChanged: {
@@ -27,6 +27,6 @@ RowLayout {
                 parameterManager.UpdateParameter(displayData.path, checked, displayData.type);
             }
         }
-    }
+    // }
 }
 

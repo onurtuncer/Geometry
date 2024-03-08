@@ -12,14 +12,14 @@ RowLayout {
         text: displayData.key
     }
 
-    ColumnLayout {
-        Layout.alignment: Qt.AlignVCenter
+    // ColumnLayout {
+    //     Layout.alignment: Qt.AlignVCenter
 
-        Item {
-            Layout.fillWidth: true
-        }
+    //     Item {
+    //         Layout.fillWidth: true
+    //     }
 
-        RowLayout {
+    RowLayout {
             SpinBox {
                 id: spinBox
                 value: displayData.value // Assuming displayData.value is an integer
@@ -31,5 +31,5 @@ RowLayout {
                 }
             }
         }
-    }
+    // }
 }

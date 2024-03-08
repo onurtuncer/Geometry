@@ -50,6 +50,8 @@ TreeView {
                             return intDelegate; // int32T
                         case 18:
                             return intDelegate; // int8T
+                        case 20:
+                            return stringVectorDelegate; 
                         case 21:
                             return intDelegate; // uint8T
                         case 3:
@@ -58,7 +60,7 @@ TreeView {
                     }
                 }
 
-                // Bind currentData property to currentRow.currentData
+                // Bind delegateData property to currentRow.currentData
                 property var delegateData: currentRow.currentData
                 property var delegateHeight: contentItem.height
                 property var delegateWidth: parameterTreeView.width
@@ -141,6 +143,15 @@ TreeView {
    Component {
      id: doubleVectorDelegate
      DoubleVectorDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
+
+  Component {
+     id: stringVectorDelegate
+     StringVectorDelegate {
        displayData: delegateData
        height: delegateHeight
        width:  delegateWidth

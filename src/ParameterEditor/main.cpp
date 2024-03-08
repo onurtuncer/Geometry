@@ -29,7 +29,7 @@ void setupParameters(QParameterManager* pm1) {
   // pm1->AddParameter("channels.01.trajectory.sample_time", Parameter<double>(0.001));
   // pm1->AddParameter("channels.01.trajectory.acceleration_limit", Parameter<double>(4000));
   // pm1->AddParameter("channels.01.trajectory.deceleration_limit", Parameter<double>(4000));
-//   pm1->AddParameter("channels.01.servo_names", Parameter<std::vector<std::string>>({"01", "02", "03"}));
+  pm1->AddParameter("channels.01.servo_names", Parameter<std::vector<std::string>>({"01", "02", "03"}));
   // pm1->AddParameter("bus.io_names", Parameter<std::vector<std::string>>({"01"}));
   pm1->AddParameter("offsets.g54", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
 //   pm1->AddParameter("offsets.g55", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));

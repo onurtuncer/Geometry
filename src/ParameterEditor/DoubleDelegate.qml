@@ -12,12 +12,12 @@ RowLayout {
         text: displayData.key
     }
 
-    ColumnLayout {
-        Layout.alignment: Qt.AlignVCenter
+    // ColumnLayout {
+    //     Layout.alignment: Qt.AlignVCenter
 
-        Item {
-            Layout.fillWidth: true
-        }
+    //     Item {
+    //         Layout.fillWidth: true
+    //     }
 
         TextInput {
             id: textInput
@@ -33,4 +33,4 @@ RowLayout {
     }
 }
 
-}
+// }

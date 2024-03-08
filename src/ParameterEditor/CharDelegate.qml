@@ -6,16 +6,21 @@ RowLayout {
     property var displayData
 
     Text {
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignLeft
-        text: displayData.key
+      verticalAlignment: Text.AlignVCenter
+      horizontalAlignment: Text.AlignLeft
+      text: displayData.key
     }
 
     ComboBox {
-        id: charComboBox
-        width: parent.width / 3
-        model: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-                 "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+      id: charComboBox
+      width: parent.width / 3
+      model: {
+        var modelList = [];
+        for (var i = 65; i <= 90; i++) {
+          modelList.push(String.fromCharCode(i)); 
+        }
+        return modelList;
+      }
         editable: false 
 
         // When an item is selected, update the parameter manager
