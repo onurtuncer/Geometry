@@ -11,5 +11,6 @@
         <file>IntDelegate.qml</file>
         <file>UnsignedIntDelegate.qml</file>
         <file>SignedCharDelegate.qml</file>
+        <file>StringDelegate.qml</file>
     </qresource>
 </RCC>

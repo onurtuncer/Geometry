@@ -1,0 +1,16 @@
+{
+"version": "0.2.0",
+"configurations": [
+    {
+        "name": "parameterEditor",
+        "type": "cppdbg",
+        "request": "launch",
+        "cwd": "${workspaceFolder}",
+        "program": "${workspaceFolder}/src/ParameterEditor/build/parameterEditor",
+        // "args": ["-E"],
+        "MIMode": "gdb",
+        "externalConsole": false,
+        "miDebuggerPath": "/usr/bin/gdb"
+    }
+]
+}

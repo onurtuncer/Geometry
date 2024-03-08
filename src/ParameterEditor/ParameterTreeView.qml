@@ -14,7 +14,6 @@ TreeView {
     property alias rowPadding: parameterTreeView.rowPadding
     property alias selectionEnabled: parameterTreeView.selectionEnabled
 
-    // Bind data model and other properties
     anchors.fill: parent
     anchors.margins: 1
 
@@ -24,7 +23,6 @@ TreeView {
         width: parameterTreeView.width
         height: childrenRect.height
 
-        // RowLayout with Loader
         RowLayout {
             anchors.fill: parent
 
@@ -38,12 +36,16 @@ TreeView {
                             return boolDelegate;
                         case 6:
                             return charDelegate;
+                        case 7:
+                            return stringDelegate;
                         case 1:
                             return intDelegate;
                         case 2:
                             return unsignedIntDelegate;
                         case 8:
                             return signedCharDelegate;
+                        case 19:
+                            return doubleVectorDelegate;
                         case 17:
                             return intDelegate; // int32T
                         case 18:
@@ -121,6 +123,15 @@ TreeView {
   Component {
      id: charDelegate
      CharDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
+
+  Component {
+     id: stringDelegate
+     StringDelegate {
        displayData: delegateData
        height: delegateHeight
        width:  delegateWidth

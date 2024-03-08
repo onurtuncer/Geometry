@@ -21,23 +21,23 @@ void setupParameters(QParameterManager* pm1) {
   // pm1.AddParameter("channels.01.type", Parameter<int>(0)); // 0: milling, 1: turning
   pm1->AddParameter("channels.01.turning_axis", Parameter<char>('C'));
   pm1->AddParameter("channels.01.number_of_axes", Parameter<int>(3));
-  // pm1.AddParameter("channels.01.kinematics_type", Parameter<int>(0));
-//   pm1.AddParameter("channels.01.trajectory.jerklimit", Parameter<double>(50000));
+  // pm1->AddParameter("channels.01.kinematics_type", Parameter<int>(0));
+//   pm1->AddParameter("channels.01.trajectory.jerklimit", Parameter<double>(50000));
   pm1->AddParameter("channels.01.trajectory.contouring_enabled", Parameter<bool>(false));
   pm1->AddParameter("channels.01.trajectory.microspline_enabled", Parameter<bool>(true));
 //   pm1.AddParameter("channels.01.trajectory.cornering_tolerance", Parameter<double>(0.4));
   // pm1->AddParameter("channels.01.trajectory.sample_time", Parameter<double>(0.001));
   // pm1->AddParameter("channels.01.trajectory.acceleration_limit", Parameter<double>(4000));
   // pm1->AddParameter("channels.01.trajectory.deceleration_limit", Parameter<double>(4000));
-//   pm1.AddParameter("channels.01.servo_names", Parameter<std::vector<std::string>>({"01", "02", "03"}));
-  // pm1.AddParameter("bus.io_names", Parameter<std::vector<std::string>>({"01"}));
-//   pm1.AddParameter("offsets.g54", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
-//   pm1.AddParameter("offsets.g55", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
-//   pm1.AddParameter("offsets.g56", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
-//   pm1.AddParameter("offsets.g57", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
-//   pm1.AddParameter("offsets.g58", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
-//   pm1.AddParameter("offsets.g59", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
-  // pm1.AddParameter("offsets.activeOffset", Parameter<std::string>("g54"));
+//   pm1->AddParameter("channels.01.servo_names", Parameter<std::vector<std::string>>({"01", "02", "03"}));
+  // pm1->AddParameter("bus.io_names", Parameter<std::vector<std::string>>({"01"}));
+  pm1->AddParameter("offsets.g54", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
+//   pm1->AddParameter("offsets.g55", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
+//   pm1->AddParameter("offsets.g56", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
+//   pm1->AddParameter("offsets.g57", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
+//   pm1->AddParameter("offsets.g58", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
+//   pm1->AddParameter("offsets.g59", Parameter<std::vector<double>>({0.0, 0.0, 0.0}));
+  pm1->AddParameter("offsets.activeOffset", Parameter<std::string>("G54"));
   // pm1->AddParameter("tools.T101.diameter", Parameter<double>(10.0));
   // pm1->AddParameter("tools.T101.lengthOffset", Parameter<double>(0.0));
   // pm1->AddParameter("tools.T102.diameter", Parameter<double>(10.0));
@@ -88,7 +88,7 @@ void loadParameter(const QString& path, const QVariant& paramValue, int type, Tr
 void populateModelFromParameterManager(QParameterManager* paramManager, TreeModel* parameterModel) {
     
     for (const auto& pair : paramManager->GetParameters()) {
-      
+
         const std::string& path = pair.first;
         const QWrappedParameter& wrappedParam = QWrappedParameter::fromWrappedParameter(pair.second);
         const QVariant value = wrappedParam.toQVariant();
