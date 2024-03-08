@@ -12,25 +12,16 @@ RowLayout {
         text: displayData.key
     }
 
-    // ColumnLayout {
-    //     Layout.alignment: Qt.AlignVCenter
-
-    //     Item {
-    //         Layout.fillWidth: true
-    //     }
-
-        TextInput {
-            id: textInput
-            text: displayData.value.toString() // Convert QVariant double to text
-            validator: DoubleValidator { bottom: -9999999.0; top: 9999999.0; decimals: 2 }
-            width: parent.width / 3
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            onTextChanged: {
-                    console.log("Parameter path:", displayData.path, ", value:", textInput.text);
-                    parameterManager.UpdateParameter(displayData.path, parseFloat(textInput.text), displayData.type);
+    TextInput {
+        id: textInput
+        text: displayData.value.toString() // Convert QVariant double to text
+        validator: DoubleValidator { bottom: -9999999.0; top: 9999999.0; decimals: 2 }
+        width: parent.width / 3
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        onTextChanged: {
+            console.log("Parameter path:", displayData.path, ", value:", textInput.text);
+            parameterManager.UpdateParameter(displayData.path, parseFloat(textInput.text), displayData.type);
         }
     }
 }
-
-// }

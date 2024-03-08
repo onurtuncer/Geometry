@@ -12,24 +12,16 @@ RowLayout {
         text: displayData.key
     }
 
-    // ColumnLayout {
-    //     Layout.alignment: Qt.AlignVCenter
-
-    //     Item {
-    //         Layout.fillWidth: true
-    //     }
-
     RowLayout {
-            SpinBox {
-                id: spinBox
-                value: displayData.value // Assuming displayData.value is an integer
-                stepSize: 1
-                width: parent.width / 3
-                onValueChanged: {
-                    console.log("Parameter path:", displayData.path, ", value:", value);
-                    parameterManager.UpdateParameter(displayData.path, value, displayData.type);
-                }
+        SpinBox {
+            id: spinBox
+            value: displayData.value // Assuming displayData.value is an integer
+            stepSize: 1
+            width: parent.width / 3
+            onValueChanged: {
+                console.log("Parameter path:", displayData.path, ", value:", value);
+                parameterManager.UpdateParameter(displayData.path, value, displayData.type);     
             }
         }
-    // }
+    }
 }

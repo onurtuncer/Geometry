@@ -113,16 +113,16 @@ public:
                 break;
             }
           case Ctrl::ParameterType::StringVector: {
-    auto vector = m_parameter.GetParameter<std::vector<std::string>>().getValue();
-    QVariantList list;
-    for (const auto& value : vector) {
-        // Convert each std::string to QString safely
-        QString convertedValue = QString::fromUtf8(value.c_str(), value.length());
-        list.append(convertedValue);
-    }
-    variant.setValue(list);
-    break;
-}
+                auto vector = m_parameter.GetParameter<std::vector<std::string>>().getValue();
+                QVariantList list;
+                for (const auto& value : vector) {
+                    // Convert each std::string to QString safely
+                    QString convertedValue = QString::fromUtf8(value.c_str(), value.length());
+                    list.append(convertedValue);
+                }
+                variant.setValue(list);
+                break;
+            }
             case Ctrl::ParameterType::UInt8T:
                 variant.setValue(m_parameter.GetParameter<uint8_t>().getValue());
                 break;
@@ -145,13 +145,13 @@ public:
         case Ctrl::ParameterType::Integer:
             wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<int>(variant.toInt()));
             break;
-        case Controller::ParameterType::UnsignedInt:
+        case Ctrl::ParameterType::UnsignedInt:
             wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<unsigned int>(variant.toUInt()));
             break;
-        case Controller::ParameterType::Double:
+        case Ctrl::ParameterType::Double:
             wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<double>(variant.toDouble()));
             break;
-        case Controller::ParameterType::Float:
+        case Ctrl::ParameterType::Float:
             wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<float>(variant.toFloat()));
             break;
         case Controller::ParameterType::Char:
@@ -160,25 +160,31 @@ public:
         case Controller::ParameterType::String:
             wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<std::string>(variant.toString().toStdString()));
             break;
-        case Controller::ParameterType::PairDoubleDouble: {
+        case Ctrl::ParameterType::PairDoubleDouble: {
             QVariantList list = variant.toList();
             auto pair = std::make_pair(list[0].toDouble(), list[1].toDouble());
             wrappedParameter = Ctrl::WrappedParameter(Controller::Parameter<std::pair<double, double>>(pair));
             break;
         }
-        case Controller::ParameterType::PairStringString: {
+        case Ctrl::ParameterType::PairBoolDouble: {
+          QVariantList list = variant.toList();
+          auto pair = std::make_pair(list[0].toBool(), list[1].toDouble());
+          wrappedParameter = Ctrl::WrappedParameter(Controller::Parameter<std::pair<bool, double>>(pair));
+          break;
+       }
+       case Ctrl::ParameterType::PairStringString: {
             QVariantList list = variant.toList();
             auto pair = std::make_pair(list[0].toString().toStdString(), list[1].toString().toStdString());
             wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<std::pair<std::string, std::string>>(pair));
             break;
         }
-        case Controller::ParameterType::DoubleVector: {
+        case Ctrl::ParameterType::DoubleVector: {
             QVariantList list = variant.toList();
             std::vector<double> vector;
             for (const QVariant& item : list) {
                 vector.push_back(item.toDouble());
             }
-            wrappedParameter = Controller::WrappedParameter(Ctrl::Parameter<std::vector<double>>(vector));
+            wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<std::vector<double>>(vector));
             break;
         }
         case Ctrl::ParameterType::StringVector: {
@@ -206,4 +212,3 @@ private:
 
 
 #endif // QWRAPPEDPARAMETER_H
-

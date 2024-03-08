@@ -3,13 +3,13 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 RowLayout {
-
+    
     property var displayData
 
     Text {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
-        text: displayData.key 
+        text: displayData.key
     }
 
     Repeater {
@@ -27,5 +27,5 @@ RowLayout {
                 parameterManager.UpdateParameter(displayData.path, updatedList, displayData.type);
             }
         }
-    }
+    } 
 }

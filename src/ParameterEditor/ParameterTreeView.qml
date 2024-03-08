@@ -44,6 +44,12 @@ TreeView {
                             return unsignedIntDelegate;
                         case 8:
                             return signedCharDelegate;
+                        case 9:
+                            return doubleDoublePairDelegate;
+                        case 10:
+                            return boolDoublePairDelegate;  
+                        case 11:
+                            return stringStringPairDelegate;
                         case 19:
                             return doubleVectorDelegate;
                         case 17:
@@ -152,6 +158,33 @@ TreeView {
   Component {
      id: stringVectorDelegate
      StringVectorDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
+
+  Component {
+     id: stringStringPairDelegate
+     StringStringPairDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
+
+Component {
+     id: doubleDoublePairDelegate
+     DoubleDoublePairDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
+
+  Component {
+     id: boolDoublePairDelegate
+     BoolDoublePairDelegate {
        displayData: delegateData
        height: delegateHeight
        width:  delegateWidth

@@ -13,5 +13,8 @@
         <file>SignedCharDelegate.qml</file>
         <file>StringDelegate.qml</file>
         <file>StringVectorDelegate.qml</file>
+        <file>StringStringPairDelegate.qml</file>
+        <file>DoubleDoublePairDelegate.qml</file>
+        <file>BoolDoublePairDelegate.qml</file>
     </qresource>
 </RCC>

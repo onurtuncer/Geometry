@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 RowLayout {
-    
+
     property var displayData
 
     Text {
@@ -24,7 +24,7 @@ RowLayout {
                 for (var i = 0; i < displayData.value.length; i++) {
                     updatedList.push(displayData.value[i]);
                 }
-                updatedList[index] = text; // Update the value at the current index
+                updatedList[index] = text; 
                 console.log("Parameter path:", displayData.path, ", updated values:", updatedList);
                 parameterManager.UpdateParameter(displayData.path, updatedList, displayData.type);
             }

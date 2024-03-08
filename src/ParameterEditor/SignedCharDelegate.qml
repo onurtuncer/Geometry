@@ -11,25 +11,17 @@ RowLayout {
         text: displayData.key
     }
 
-    ColumnLayout {
-        Layout.alignment: Qt.AlignVCenter
-
-        Item {
-            Layout.fillWidth: true
+    SpinBox {
+        id: spinBox
+        value: Math.min(127, Math.max(-128, displayData.value)) // Clamp value to range of signed char
+        from: -128
+        to: 127
+        stepSize: 1
+        width: parent.width / 3
+        validator: IntValidator { bottom: -128; top: 127 }
+        onValueChanged: {
+            console.log("Parameter path:", displayData.path, ", value:", value);
+            parameterManager.UpdateParameter(displayData.path, value, displayData.type);
         }
-
-        SpinBox {
-            id: spinBox
-            value: Math.min(127, Math.max(-128, displayData.value)) // Clamp value to range of signed char
-            from: -128
-            to: 127
-            stepSize: 1
-            width: parent.width / 3
-            validator: IntValidator { bottom: -128; top: 127 }
-            onValueChanged: {
-                console.log("Parameter path:", displayData.path, ", value:", value);
-                parameterManager.UpdateParameter(displayData.path, value, displayData.type);
-            }
-        }
-    }
+    } 
 }
