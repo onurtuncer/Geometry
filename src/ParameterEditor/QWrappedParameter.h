@@ -6,7 +6,6 @@
 #include <QVariant>
 #include <QDebug> 
 
-// Namespace aliases
 namespace Ctrl = Controller;
 namespace Ethercat = Controller::Ethercat;
 namespace Devices = Controller::Ethercat::Devices;
@@ -116,7 +115,6 @@ public:
                 auto vector = m_parameter.GetParameter<std::vector<std::string>>().getValue();
                 QVariantList list;
                 for (const auto& value : vector) {
-                    // Convert each std::string to QString safely
                     QString convertedValue = QString::fromUtf8(value.c_str(), value.length());
                     list.append(convertedValue);
                 }
@@ -163,13 +161,13 @@ public:
         case Ctrl::ParameterType::PairDoubleDouble: {
             QVariantList list = variant.toList();
             auto pair = std::make_pair(list[0].toDouble(), list[1].toDouble());
-            wrappedParameter = Ctrl::WrappedParameter(Controller::Parameter<std::pair<double, double>>(pair));
+            wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<std::pair<double, double>>(pair));
             break;
         }
         case Ctrl::ParameterType::PairBoolDouble: {
           QVariantList list = variant.toList();
           auto pair = std::make_pair(list[0].toBool(), list[1].toDouble());
-          wrappedParameter = Ctrl::WrappedParameter(Controller::Parameter<std::pair<bool, double>>(pair));
+          wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<std::pair<bool, double>>(pair));
           break;
        }
        case Ctrl::ParameterType::PairStringString: {

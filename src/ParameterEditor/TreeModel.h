@@ -25,7 +25,7 @@
 #ifndef QML_TREEVIEW_TREE_MODEL_H
 #define QML_TREEVIEW_TREE_MODEL_H
 
-#include "tree_item.h"
+#include "TreeItem.h"
 
 #include <QAbstractItemModel>
 
@@ -66,7 +66,7 @@ private:
     TreeItem* internalPointer(const QModelIndex& index) const;
 
 private:
-    TreeItem* _rootItem;
+    TreeItem* m_RootItem;
 };
 
 #endif // QML_TREEVIEW_TREE_MODEL_H

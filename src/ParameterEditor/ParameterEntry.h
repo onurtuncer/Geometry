@@ -7,28 +7,28 @@
 
 class ParameterEntry {
     Q_GADGET
-    Q_PROPERTY(QString key READ PrettyKey WRITE setKey)
-    Q_PROPERTY(QVariant value READ value WRITE setValue NOTIFY valueChanged)
-    Q_PROPERTY(int type READ type)
-    Q_PROPERTY(QString path READ path)
+    Q_PROPERTY(QString key READ PrettyKey WRITE SetKey)
+    Q_PROPERTY(QVariant value READ Value WRITE SetValue NOTIFY ValueChanged)
+    Q_PROPERTY(int type READ Type)
+    Q_PROPERTY(QString path READ Path)
 
 public:
     ParameterEntry();
     ParameterEntry(const QString& key, const QVariant& value, const int parameterType, const QString& path = QString(), QObject* parent = nullptr);
 
-    QString key() const;
+    QString Key() const;
     QString PrettyKey() const;
-    void setKey(const QString& key);
+    void SetKey(const QString& key);
 
-    QVariant value() const;
-    void setValue(const QVariant& value);
+    QVariant Value() const;
+    void SetValue(const QVariant& value);
 
-    int type() const;
-    QString path() const;
+    int Type() const;
+    QString Path() const;
 
 signals:
-    void valueChanged(const QVariant& value);
-    void keyChanged(const QString& key);
+    void ValueChanged(const QVariant& value);
+    void KeyChanged(const QString& key);
 
 private:
     QString  m_key;

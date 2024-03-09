@@ -18,11 +18,11 @@ find_package(Qt6 REQUIRED COMPONENTS Core Qml Quick)
 
 set(PROJECT_SOURCES
     main.cpp
-    tree_model.cpp
-    tree_item.cpp
-    parameter_entry.cpp
-    qml.qrc
+    TreeModel.cpp
+    TreeItem.cpp
+    ParameterEntry.cpp  
     QParameterManager.cpp
+    qml.qrc
     )
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
@@ -32,7 +32,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core
                                               Qt6::Qml 
                                               )
 
-# Include Qt headers for the specific target
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${Qt6Core_INCLUDE_DIRS}
     ${Qt6Quick_INCLUDE_DIRS}

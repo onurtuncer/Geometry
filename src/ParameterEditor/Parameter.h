@@ -14,7 +14,7 @@
 #include <type_traits>
 #include <functional> // For reference wrapper
 #include <string_view>
-#include "json.hpp"
+#include "vendor/json.hpp"
 
 #include "Ethercat/DS402/PDOType.h"
 #include "Ethercat/DS402/ModeOfOperation.h"

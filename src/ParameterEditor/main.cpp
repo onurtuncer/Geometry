@@ -1,6 +1,6 @@
 
-#include "parameter_entry.h"
-#include "tree_model.h"
+#include "ParameterEntry.h"
+#include "TreeModel.h"
 
 #include <QFile>
 #include <QGuiApplication>
@@ -68,9 +68,9 @@ void loadParameter(const QString& path, const QVariant& paramValue, int type, Tr
     for (const QString& nodeName : hierarchy) {
    
         bool nodeExists = false;
-        for (int i = 0; i < parent->childCount(); ++i) {
-            if (parent->getChild(i)->data().value<ParameterEntry>().key() == nodeName) {
-                parent = parent->getChild(i);
+        for (int i = 0; i < parent->ChildCount(); ++i) {
+            if (parent->GetChild(i)->Data().value<ParameterEntry>().Key() == nodeName) {
+                parent = parent->GetChild(i);
                 nodeExists = true;
                 break;
             }
@@ -126,7 +126,7 @@ populateModelFromParameterManager(pm1, parameterModel);
 engine.rootContext()->setContextProperty("parameterModel", parameterModel);
 engine.rootContext()->setContextProperty("parameterManager", pm1);
 
-const QUrl url(QStringLiteral("qrc:/main.qml"));
+const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
 
 QObject::connect(
         &engine,

@@ -1,23 +1,23 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>TreeView.qml</file>
-        <file>TreeViewItem.qml</file>
-        <file>ParameterTreeView.qml</file>
-        <file>BoolDelegate.qml</file>
-        <file>CharDelegate.qml</file>
-        <file>DoubleDelegate.qml</file>
-        <file>DoubleVectorDelegate.qml</file>
-        <file>IntDelegate.qml</file>
-        <file>UnsignedIntDelegate.qml</file>
-        <file>SignedCharDelegate.qml</file>
-        <file>StringDelegate.qml</file>
-        <file>StringVectorDelegate.qml</file>
-        <file>StringStringPairDelegate.qml</file>
-        <file>DoubleDoublePairDelegate.qml</file>
-        <file>BoolDoublePairDelegate.qml</file>
-        <file>RxPDOTypeDelegate.qml</file>
-        <file>TxPDOTypeDelegate.qml</file>
-        <file>ModeOfOperationDelegate.qml</file>
+        <file>qml/main.qml</file>
+        <file>qml/TreeView.qml</file>
+        <file>qml/TreeViewItem.qml</file>
+        <file>qml/ParameterTreeView.qml</file>
+        <file>qml/BoolDelegate.qml</file>
+        <file>qml/CharDelegate.qml</file>
+        <file>qml/DoubleDelegate.qml</file>
+        <file>qml/DoubleVectorDelegate.qml</file>
+        <file>qml/IntDelegate.qml</file>
+        <file>qml/UnsignedIntDelegate.qml</file>
+        <file>qml/SignedCharDelegate.qml</file>
+        <file>qml/StringDelegate.qml</file>
+        <file>qml/StringVectorDelegate.qml</file>
+        <file>qml/StringStringPairDelegate.qml</file>
+        <file>qml/DoubleDoublePairDelegate.qml</file>
+        <file>qml/BoolDoublePairDelegate.qml</file>
+        <file>qml/RxPDOTypeDelegate.qml</file>
+        <file>qml/TxPDOTypeDelegate.qml</file>
+        <file>qml/ModeOfOperationDelegate.qml</file>
     </qresource>
 </RCC>

@@ -8,7 +8,7 @@ RowLayout {
     Text {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
-        text: displayData.key // Display the parameter name
+        text: displayData.key 
     }
 
     ComboBox {

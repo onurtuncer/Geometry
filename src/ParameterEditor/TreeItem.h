@@ -43,32 +43,32 @@ public:
     explicit TreeItem(const QVariant& data);
     ~TreeItem();
 
-    const QVariant& data() const;
-    void setData(const QVariant& data);
-    int childCount() const;
-    int row() const;
-    bool isLeaf() const;
-    int depth() const;
+    const QVariant& Data() const;
+    void SetData(const QVariant& data);
+    int ChildCount() const;
+    int Row() const;
+    bool IsLeaf() const;
+    int Depth() const;
     
-    TreeItem* getChild(int row) const{
+    TreeItem* GetChild(int row) const{
 
-      if (row >= 0 && row < _childItems.size()) return _childItems[row];
+      if (row >= 0 && row < m_ChildItems.size()) return m_ChildItems[row];
       return nullptr;
     }
 
 private:
-    TreeItem* parentItem();
-    void setParentItem(TreeItem* parentItem);
+    TreeItem* ParentItem();
+    void SetParentItem(TreeItem* parentItem);
 
-    void appendChild(TreeItem* item);
-    void removeChild(TreeItem* item);
+    void AppendChild(TreeItem* item);
+    void RemoveChild(TreeItem* item);
 
-    TreeItem* child(int row);
+    TreeItem* Child(int row);
 
 private:
-    QVariant _itemData;
-    TreeItem* _parentItem;
-    QVector<TreeItem*> _childItems;
+    QVariant           m_ItemData;
+    TreeItem*          m_ParentItem;
+    QVector<TreeItem*> m_ChildItems;
 };
 
 #endif // QML_TREEVIEW_TREE_ITEM_H

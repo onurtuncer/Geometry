@@ -9,6 +9,7 @@ QParameterManager::QParameterManager(QObject *parent) : QObject(parent) {
 }
 
 QParameterManager* QParameterManager::Instance() {
+    
     if (!m_instance) {
         m_instance = new QParameterManager();
     }
