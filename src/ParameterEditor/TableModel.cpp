@@ -86,7 +86,7 @@ bool TableModel::setData(const QModelIndex& index, const QVariant& value, int /*
     return false;
 }
 
-void TableModel::AddTopLevelItem(TableItem* child){
+void TableModel::AddRowItem(TableItem* child){
 
     if (child) {
         AddItem(m_RootItem, child);

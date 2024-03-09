@@ -6,6 +6,7 @@
         <file>qml/TreeView.qml</file>
         <file>qml/TreeViewItem.qml</file>
         <file>qml/ParameterTreeView.qml</file>
+        <file>qml/ParameterTableView.qml</file>
         <file>qml/BoolDelegate.qml</file>
         <file>qml/CharDelegate.qml</file>
         <file>qml/DoubleDelegate.qml</file>

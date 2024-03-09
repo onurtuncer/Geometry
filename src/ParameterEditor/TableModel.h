@@ -30,7 +30,7 @@ public:
     bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
 
 public:
-    void AddTopLevelItem(TableItem* child); 
+    void AddRowItem(TableItem* child); 
     void RemoveItem(TableItem* item);
     TableItem* RootItem() const;
 

@@ -20,7 +20,7 @@ TreeView {
     // ContentItem
     contentItem: Item {
         id: contentItem
-        width: parameterTreeView.width
+        width: parameterTableView.width
         height: childrenRect.height
 
         RowLayout {
@@ -75,7 +75,7 @@ TreeView {
                 // Bind delegateData property to currentRow.currentData
                 property var delegateData: currentRow.currentData
                 property var delegateHeight: contentItem.height
-                property var delegateWidth: parameterTreeView.width
+                property var delegateWidth: parameterTableView.width
             }
         }
     }

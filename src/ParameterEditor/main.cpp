@@ -95,32 +95,10 @@ void loadParameter(const QString& path, const QVariant& paramValue, int type, Tr
 void loadTool(const QString& path, const QVariant& paramValue, int type, TableModel* model) {
     
     QStringList hierarchy = path.split(".");
-    // TreeItem* parent = model->RootItem(); // Assuming root is the parent initially
-
-    // Iterate through the hierarchy, adding nodes as necessary
-    // for (const QString& nodeName : hierarchy) {
-   
-    //     bool nodeExists = false;
-    //     for (int i = 0; i < parent->ChildCount(); ++i) {
-    //         if (parent->GetChild(i)->Data().value<ParameterEntry>().Key() == nodeName) {
-    //             parent = parent->GetChild(i);
-    //             nodeExists = true;
-    //             break;
-    //         }
-    //     }
-
-    //     if (!nodeExists) {
-    //         ParameterEntry entry(nodeName, QVariant(), 0); // Here you might want to pass the appropriate QVariant for the value
-    //         TreeItem* child = new TreeItem(QVariant::fromValue(entry));
-    //         model->AddItem(parent, child);
-    //         parent = child;
-    //     }
-    // }
-
     // Add the final parameter node
     ParameterEntry entry(hierarchy.last(), paramValue, type, path);
     TableItem* parameterNode = new TableItem(QVariant::fromValue(entry));
-    model->AddTopLevelItem(parameterNode);
+    model->AddRowItem(parameterNode);
 }
 
 void populateModelFromParameterManager(QParameterManager* paramManager, TreeModel* parameterModel) {
@@ -169,6 +147,7 @@ auto parameterModel = new TreeModel(&engine); // Assuming you have a parent obje
 auto toolTable = new TableModel(&engine); 
     
 populateModelFromParameterManager(pm1, parameterModel);
+PopulateToolTable(pm1, toolTable);
 
 engine.rootContext()->setContextProperty("parameterModel", parameterModel);
 engine.rootContext()->setContextProperty("parameterManager", pm1);
