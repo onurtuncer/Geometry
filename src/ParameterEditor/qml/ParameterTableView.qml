@@ -1,18 +1,18 @@
-// ParameterTreeView.qml
+// ParameterTableView.qml
 
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
-import QMLTreeView 1.0
+import QMLTableView 1.0
 
 TreeView {
-    id: parameterTreeView
+    id: parameterTableView
 
     // Define properties to receive data from the main QML file
-    property alias model: parameterTreeView.model
-    property alias rowPadding: parameterTreeView.rowPadding
-    property alias selectionEnabled: parameterTreeView.selectionEnabled
+    property alias model: parameterTableView.model
+    property alias rowPadding: parameterTableView.rowPadding
+    property alias selectionEnabled: parameterTableView.selectionEnabled
 
     anchors.fill: parent
     anchors.margins: 1

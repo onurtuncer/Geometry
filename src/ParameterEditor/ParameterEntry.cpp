@@ -69,33 +69,3 @@ QString ParameterEntry::PrettyKey() const{
     result = result.trimmed();
     return result;
 }
-
-// QString ParameterEntry::PrettyKey() const {
-//     QString originalString = m_key;
-//     QStringList parts;
-    
-//     // Split by underscore
-//     QStringList underscoreParts = originalString.split('_');
-//     for (const QString& part : underscoreParts) {
-//         // Split camel case words
-//         QStringList camelCaseParts = part.split(QRegularExpression("(?=[A-Z])"));
-//         for (const QString& camelPart : camelCaseParts) {
-//             parts.append(camelPart);
-//         }
-//     }
-    
-//     QString result;
-//     for (int i = 0; i < parts.size(); ++i) {
-//         QString part = parts.at(i);
-//         if (i == 0 || part.toLower() != "of") {
-//             // Capitalize first letter
-//             part[0] = part[0].toUpper();
-//         } else {
-//             // Convert "of" to lowercase if not the first word
-//             part = part.toLower();
-//         }
-//         result += part;
-//     }
-//     return result;
-// }
-

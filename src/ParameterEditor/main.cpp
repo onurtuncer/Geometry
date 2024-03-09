@@ -2,6 +2,8 @@
 #include "ParameterEntry.h"
 #include "TreeModel.h"
 
+#include "TableModel.h"
+
 #include <QFile>
 #include <QGuiApplication>
 #include <QJsonArray>
@@ -62,7 +64,7 @@ void setupParameters(QParameterManager* pm1) {
 void loadParameter(const QString& path, const QVariant& paramValue, int type, TreeModel* model) {
     
     QStringList hierarchy = path.split(".");
-    TreeItem* parent = model->rootItem(); // Assuming root is the parent initially
+    TreeItem* parent = model->RootItem(); // Assuming root is the parent initially
 
     // Iterate through the hierarchy, adding nodes as necessary
     for (const QString& nodeName : hierarchy) {
@@ -79,7 +81,7 @@ void loadParameter(const QString& path, const QVariant& paramValue, int type, Tr
         if (!nodeExists) {
             ParameterEntry entry(nodeName, QVariant(), 0); // Here you might want to pass the appropriate QVariant for the value
             TreeItem* child = new TreeItem(QVariant::fromValue(entry));
-            model->addItem(parent, child);
+            model->AddItem(parent, child);
             parent = child;
         }
     }
@@ -87,18 +89,60 @@ void loadParameter(const QString& path, const QVariant& paramValue, int type, Tr
     // Add the final parameter node
     ParameterEntry entry(hierarchy.last(), paramValue, type, path);
     TreeItem* parameterNode = new TreeItem(QVariant::fromValue(entry));
-    model->addItem(parent, parameterNode);
+    model->AddItem(parent, parameterNode);
+}
+
+void loadTool(const QString& path, const QVariant& paramValue, int type, TableModel* model) {
+    
+    QStringList hierarchy = path.split(".");
+    // TreeItem* parent = model->RootItem(); // Assuming root is the parent initially
+
+    // Iterate through the hierarchy, adding nodes as necessary
+    // for (const QString& nodeName : hierarchy) {
+   
+    //     bool nodeExists = false;
+    //     for (int i = 0; i < parent->ChildCount(); ++i) {
+    //         if (parent->GetChild(i)->Data().value<ParameterEntry>().Key() == nodeName) {
+    //             parent = parent->GetChild(i);
+    //             nodeExists = true;
+    //             break;
+    //         }
+    //     }
+
+    //     if (!nodeExists) {
+    //         ParameterEntry entry(nodeName, QVariant(), 0); // Here you might want to pass the appropriate QVariant for the value
+    //         TreeItem* child = new TreeItem(QVariant::fromValue(entry));
+    //         model->AddItem(parent, child);
+    //         parent = child;
+    //     }
+    // }
+
+    // Add the final parameter node
+    ParameterEntry entry(hierarchy.last(), paramValue, type, path);
+    TableItem* parameterNode = new TableItem(QVariant::fromValue(entry));
+    model->AddTopLevelItem(parameterNode);
 }
 
 void populateModelFromParameterManager(QParameterManager* paramManager, TreeModel* parameterModel) {
     
-    for (const auto& pair : paramManager->GetParameters()) {
+  for (const auto& pair : paramManager->GetParameters()) {
 
-        const std::string& path = pair.first;
-        const QWrappedParameter& wrappedParam = QWrappedParameter::fromWrappedParameter(pair.second);
-        const QVariant value = wrappedParam.toQVariant();
-        loadParameter(QString::fromStdString(path), value, static_cast<int>(wrappedParam.GetType()),  parameterModel);
-    }
+    const std::string& path = pair.first;
+    const QWrappedParameter& wrappedParam = QWrappedParameter::fromWrappedParameter(pair.second);
+    const QVariant value = wrappedParam.toQVariant();
+    loadParameter(QString::fromStdString(path), value, static_cast<int>(wrappedParam.GetType()),  parameterModel);
+  }
+}
+
+void PopulateToolTable(QParameterManager* paramManager, TableModel* toolTable){
+
+ for (const auto& pair : paramManager->GetParameters()) {
+
+    const std::string& path = pair.first;
+    const QWrappedParameter& wrappedParam = QWrappedParameter::fromWrappedParameter(pair.second);
+    const QVariant value = wrappedParam.toQVariant();
+    loadTool(QString::fromStdString(path), value, static_cast<int>(wrappedParam.GetType()),  toolTable);
+  }
 }
 
 int main(int argc, char* argv[]){
@@ -118,13 +162,18 @@ int main(int argc, char* argv[]){
   });
   
 qmlRegisterType<TreeModel>("QMLTreeView", 1, 0, "TreeModel");
+qmlRegisterType<TableModel>("QMLTableView", 1, 0, "TableModel");
 
 auto parameterModel = new TreeModel(&engine); // Assuming you have a parent object for your tree model
+
+auto toolTable = new TableModel(&engine); 
     
 populateModelFromParameterManager(pm1, parameterModel);
 
 engine.rootContext()->setContextProperty("parameterModel", parameterModel);
 engine.rootContext()->setContextProperty("parameterManager", pm1);
+
+engine.rootContext()->setContextProperty("toolTable", toolTable);
 
 const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
 

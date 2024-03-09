@@ -20,6 +20,8 @@ set(PROJECT_SOURCES
     main.cpp
     TreeModel.cpp
     TreeItem.cpp
+    TableItem.cpp
+    TableModel.cpp
     ParameterEntry.cpp  
     QParameterManager.cpp
     qml.qrc

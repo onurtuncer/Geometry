@@ -53,17 +53,17 @@ public:
 
 public:
 
-    void addTopLevelItem(TreeItem* child);
-    void addItem(TreeItem* parent, TreeItem* child);
-    void removeItem(TreeItem* item);
-    TreeItem* rootItem() const;
+    void AddTopLevelItem(TreeItem* child);
+    void AddItem(TreeItem* parent, TreeItem* child);
+    void RemoveItem(TreeItem* item);
+    TreeItem* RootItem() const;
 
     Q_INVOKABLE int depth(const QModelIndex& index) const;
     Q_INVOKABLE void clear();
     Q_INVOKABLE QModelIndex rootIndex();
 
 private:
-    TreeItem* internalPointer(const QModelIndex& index) const;
+    TreeItem* InternalPointer(const QModelIndex& index) const;
 
 private:
     TreeItem* m_RootItem;

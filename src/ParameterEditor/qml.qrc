@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
+        <file>qml/TableView.qml</file>
+        <file>qml/TableViewItem.qml</file>
         <file>qml/TreeView.qml</file>
         <file>qml/TreeViewItem.qml</file>
         <file>qml/ParameterTreeView.qml</file>
