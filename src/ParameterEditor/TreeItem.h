@@ -12,7 +12,7 @@
  * will call the delete for each child node.
  */
 class TreeItem : public AbstractItem{
-    
+
     friend class TreeModel;
 
 public:
@@ -33,7 +33,7 @@ public:
       return nullptr;
     }
 
-private:
+public:
     TreeItem* ParentItem();
     void SetParentItem(TreeItem* parentItem);
 

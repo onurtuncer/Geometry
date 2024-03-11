@@ -12,20 +12,20 @@ Window {
 
 //    RowLayout{
 
-    // ParameterTreeView {
-    //     id: parameterTreeView
+    ParameterTreeView {
+        id: parameterTreeView
 
-    //     model: parameterModel
-    //     rowPadding: 20
-    //     selectionEnabled: true
-    // }
-
-    ParameterTableView {
-        id: parameterTableView
-
-        model: toolTable
+        model: parameterModel
         rowPadding: 20
         selectionEnabled: true
     }
+
+    // ParameterTableView {
+    //     id: parameterTableView
+
+    //     model: toolTable
+    //     rowPadding: 20
+    //     selectionEnabled: true
+    // }
 //    }
 }
