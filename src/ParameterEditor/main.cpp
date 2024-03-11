@@ -61,6 +61,11 @@ void setupParameters(QParameterManager* pm1) {
   pm1->AddParameter("txPDO", Parameter<Controller::Ethercat::DS402::TxPdoTypeEnum>(Controller::Ethercat::DS402::TxPdoTypeEnum::TxPdoStandard));
   pm1->AddParameter("mode_of_operation", Parameter<Controller::Ethercat::DS402::ModeOfOperation>(Controller::Ethercat::DS402::ModeOfOperation::HomingMode));
   pm1->AddParameter("device_type", Parameter<Controller::Ethercat::Devices::SlaveType>(Controller::Ethercat::Devices::SlaveType::SMB));
+  pm1->AddParameter("modes_of_operation", Parameter<std::vector<Controller::Ethercat::DS402::ModeOfOperation>>(
+    {Controller::Ethercat::DS402::ModeOfOperation::HomingMode,
+     Controller::Ethercat::DS402::ModeOfOperation::NA,
+     Controller::Ethercat::DS402::ModeOfOperation::ProfiledPositionMode}));
+
 }
 
 void loadParameter(const QString& path, const QVariant& paramValue, int type, TreeModel* model) {
