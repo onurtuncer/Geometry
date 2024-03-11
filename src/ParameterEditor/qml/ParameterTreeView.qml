@@ -32,16 +32,20 @@ TreeView {
                     switch (currentRow.currentData.type) {
                         case 0:
                             return headerDelegate;
+                        case 1:
+                            return intDelegate;
+                        case 2:
+                            return unsignedIntDelegate;
+                        case 3:
+                            return doubleDelegate;
+                        case 4:
+                            return doubleDelegate;
                         case 5:
                             return boolDelegate;
                         case 6:
                             return charDelegate;
                         case 7:
-                            return stringDelegate;
-                        case 1:
-                            return intDelegate;
-                        case 2:
-                            return unsignedIntDelegate;
+                            return stringDelegate;               
                         case 8:
                             return signedCharDelegate;
                         case 9:
@@ -56,22 +60,23 @@ TreeView {
                             return txPDOTypeDelegate;
                         case 14:
                             return modeOfOperationDelegate;
-                        case 19:
-                            return doubleVectorDelegate;
+                        case 15:
+                            return modeOfOperationVectorDelegate;
+                        case 16:
+                            return deviceTypeDelegate;
                         case 17:
                             return intDelegate; // int32T
                         case 18:
                             return intDelegate; // int8T
+                        case 19:
+                            return doubleVectorDelegate;          
                         case 20:
                             return stringVectorDelegate; 
                         case 21:
-                            return intDelegate; // uint8T
-                        case 3:
-                            return doubleDelegate;
+                            return intDelegate; // uint8T                  
                         // Add cases for other types as needed
                     }
                 }
-
                 // Bind delegateData property to currentRow.currentData
                 property var delegateData: currentRow.currentData
                 property var delegateHeight: contentItem.height
@@ -116,7 +121,7 @@ TreeView {
     }
    }
 
-    Component {
+  Component {
      id: signedCharDelegate
      IntDelegate {
        displayData: delegateData
@@ -218,6 +223,24 @@ Component {
    Component {
      id: modeOfOperationDelegate
      ModeOfOperationDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
+
+  Component {
+     id: modeOfOperationVectorDelegate
+     ModeOfOperationVectorDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
+
+  Component {
+     id: deviceTypeDelegate
+     DeviceTypeDelegate {
        displayData: delegateData
        height: delegateHeight
        width:  delegateWidth

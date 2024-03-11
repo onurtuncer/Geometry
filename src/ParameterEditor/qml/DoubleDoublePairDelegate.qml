@@ -23,7 +23,7 @@ RowLayout {
             onTextChanged: {
                 var updatedList = displayData.value.slice(); // Create a copy of the original list
                 updatedList[index] = parseFloat(text); // Update the value at the current index
-                console.log("Parameter path:", displayData.path, ", updated values:", updatedList);
+            //    console.log("Parameter path:", displayData.path, ", updated values:", updatedList);
                 parameterManager.UpdateParameter(displayData.path, updatedList, displayData.type);
             }
         }

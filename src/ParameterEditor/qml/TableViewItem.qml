@@ -142,13 +142,13 @@ Item {
                      }
                   }
 
-                //   TapHandler {
-                //      onDoubleTapped: _prop.toggle()
-                //      onSingleTapped: {
-                //         root.currentItem = _prop.currentItem
-                //         root.selectedIndex = _prop.currentIndex
-                //      }
-                //   }
+                  TapHandler {
+                    //  onDoubleTapped: _prop.toggle()
+                     onSingleTapped: {
+                        root.currentItem = _prop.currentItem
+                        root.selectedIndex = _prop.currentIndex
+                     }
+                  }
                }
 
                Loader {

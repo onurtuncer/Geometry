@@ -59,6 +59,8 @@ void setupParameters(QParameterManager* pm1) {
   pm1->AddParameter("bool_double_pair", Parameter<std::pair<bool, double>>(std::make_pair(false, 100.0)));
   pm1->AddParameter("rxPDO", Parameter<Controller::Ethercat::DS402::RxPdoTypeEnum>(Controller::Ethercat::DS402::RxPdoTypeEnum::RxPdoCSTCSPCSV));
   pm1->AddParameter("txPDO", Parameter<Controller::Ethercat::DS402::TxPdoTypeEnum>(Controller::Ethercat::DS402::TxPdoTypeEnum::TxPdoStandard));
+  pm1->AddParameter("mode_of_operation", Parameter<Controller::Ethercat::DS402::ModeOfOperation>(Controller::Ethercat::DS402::ModeOfOperation::HomingMode));
+  pm1->AddParameter("device_type", Parameter<Controller::Ethercat::Devices::SlaveType>(Controller::Ethercat::Devices::SlaveType::SMB));
 }
 
 void loadParameter(const QString& path, const QVariant& paramValue, int type, TreeModel* model) {

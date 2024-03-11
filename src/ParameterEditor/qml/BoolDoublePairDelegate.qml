@@ -17,7 +17,7 @@ RowLayout {
         checked: displayData.value[0] // Display the boolean value
         onCheckedChanged: {
             var updatedPair = [ checked , doubleTextInput.text ];
-            console.log("Parameter path:", displayData.path, ", updated pair:", updatedPair);
+         //   console.log("Parameter path:", displayData.path, ", updated pair:", updatedPair);
             parameterManager.UpdateParameter(displayData.path, updatedPair, displayData.type);
         }
     }
@@ -29,7 +29,7 @@ RowLayout {
     width: parent.width / 3
     onTextChanged: {
         var updatedPair = [checkBox.checked, text ];
-        console.log("Parameter path:", displayData.path, ", updated pair:", updatedPair);
+      //  console.log("Parameter path:", displayData.path, ", updated pair:", updatedPair);
         parameterManager.UpdateParameter(displayData.path, updatedPair, displayData.type);
     }
 }

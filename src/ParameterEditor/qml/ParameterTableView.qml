@@ -31,17 +31,21 @@ TreeView {
                     // Use currentRow.currentData here to determine which delegate to load
                     switch (currentRow.currentData.type) {
                         case 0:
-                            return headerDelegate;
+                            return headerDelegate; 
+                        case 1:
+                            return intDelegate;
+                        case 2:
+                            return unsignedIntDelegate;
+                        case 3:
+                            return doubleDelegate;
+                        case 4:
+                            return doubleDelegate;
                         case 5:
                             return boolDelegate;
                         case 6:
                             return charDelegate;
                         case 7:
                             return stringDelegate;
-                        case 1:
-                            return intDelegate;
-                        case 2:
-                            return unsignedIntDelegate;
                         case 8:
                             return signedCharDelegate;
                         case 9:
@@ -56,6 +60,10 @@ TreeView {
                             return txPDOTypeDelegate;
                         case 14:
                             return modeOfOperationDelegate;
+                        case 15:
+                            return modeOfOperationVectorDelegate;
+                        case 16:
+                             return deviceTypeDelegate;
                         case 19:
                             return doubleVectorDelegate;
                         case 17:
@@ -66,8 +74,7 @@ TreeView {
                             return stringVectorDelegate; 
                         case 21:
                             return intDelegate; // uint8T
-                        case 3:
-                            return doubleDelegate;
+                      
                         // Add cases for other types as needed
                     }
                 }
@@ -218,6 +225,24 @@ Component {
    Component {
      id: modeOfOperationDelegate
      ModeOfOperationDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
+
+  Component {
+     id: modeOfOperationVectorDelegate
+     ModeOfOperationVectorDelegate {
+       displayData: delegateData
+       height: delegateHeight
+       width:  delegateWidth
+    }
+  }
+
+  Component {
+     id: deviceTypeDelegate
+     DeviceTypeDelegate {
        displayData: delegateData
        height: delegateHeight
        width:  delegateWidth

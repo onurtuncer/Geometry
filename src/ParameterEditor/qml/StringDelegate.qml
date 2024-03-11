@@ -19,7 +19,7 @@ RowLayout {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         onTextChanged: {
-            console.log("Parameter path:", displayData.path, ", value:", textInput.text);
+         //   console.log("Parameter path:", displayData.path, ", value:", textInput.text);
             parameterManager.UpdateParameter(displayData.path, textInput.text, displayData.type);
         }
     }

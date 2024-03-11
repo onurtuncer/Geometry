@@ -25,7 +25,7 @@ RowLayout {
                     updatedList.push(displayData.value[i]);
                 }
                 updatedList[index] = text; 
-                console.log("Parameter path:", displayData.path, ", updated values:", updatedList);
+            //    console.log("Parameter path:", displayData.path, ", updated values:", updatedList);
                 parameterManager.UpdateParameter(displayData.path, updatedList, displayData.type);
             }
         }

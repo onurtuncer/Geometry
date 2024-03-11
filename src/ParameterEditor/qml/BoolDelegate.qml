@@ -16,7 +16,7 @@ RowLayout {
             id: checkBox
             checked: displayData.value
             onCheckedChanged: {
-                console.log("Parameter path:", displayData.path, ", checked:", checked);
+              //  console.log("Parameter path:", displayData.path, ", checked:", checked);
                 parameterManager.UpdateParameter(displayData.path, checked, displayData.type);
             }
         }

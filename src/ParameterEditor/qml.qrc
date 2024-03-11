@@ -22,5 +22,7 @@
         <file>qml/RxPDOTypeDelegate.qml</file>
         <file>qml/TxPDOTypeDelegate.qml</file>
         <file>qml/ModeOfOperationDelegate.qml</file>
+        <file>qml/ModeOfOperationVectorDelegate.qml</file>
+        <file>qml/DeviceTypeDelegate.qml</file>
     </qresource>
 </RCC>

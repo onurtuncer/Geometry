@@ -27,7 +27,7 @@ RowLayout {
         // When an item is selected, update the parameter manager
         onActivated: {
             var selectedValue = model[currentIndex].value;
-            console.log("Parameter path:", displayData.path, ", value:", selectedValue);
+          //  console.log("Parameter path:", displayData.path, ", value:", selectedValue);
             parameterManager.UpdateParameter(displayData.path, selectedValue, displayData.type);
         }
 

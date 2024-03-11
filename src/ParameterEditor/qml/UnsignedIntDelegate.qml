@@ -21,7 +21,7 @@ RowLayout {
         width: parent.width / 3
         validator: IntValidator { bottom: 0; top: 4294967295 }
         onValueChanged: {
-            console.log("Parameter path:", displayData.path, ", value:", value);
+          //  console.log("Parameter path:", displayData.path, ", value:", value);
             parameterManager.UpdateParameter(displayData.path, value, displayData.type);
         }
     }  

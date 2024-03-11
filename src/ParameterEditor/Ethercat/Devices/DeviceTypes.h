@@ -6,7 +6,7 @@ namespace Controller::Ethercat::Devices {
 
 
       enum class SlaveType {
-          XMC,
+          XMC = 0,
           SMB,
           Yaskawa,
           Beckhoff,

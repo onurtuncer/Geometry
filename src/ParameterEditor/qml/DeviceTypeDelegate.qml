@@ -16,14 +16,12 @@ RowLayout {
         id: modeComboBox
         width: parent.width / 3
         model: [
-            { value: 0,  display: "N/A" },
-            { value: 1,  display: "Profiled Position" },
-            { value: 3,  display: "Profiled Velocity" },
-            { value: 4,  display: "Profiled Torque" },
-            { value: 6,  display: "Homing" },
-            { value: 8,  display: "Cyclic Synchronous Position" },
-            { value: 9,  display: "Cyclic Synchronous Velocity" },
-            { value: 10, display: "Cyclic Synchronous Torque" }
+            { value: 0,  display: "XMC" },
+            { value: 1,  display: "SMB" },
+            { value: 2,  display: "Yaskawa" },
+            { value: 3,  display: "Beckhoff" },
+            { value: 4,  display: "DeltaIO" },
+            { value: 5,  display: "N/A" },
         ]
         textRole: "display"
         editable: false 
@@ -31,7 +29,7 @@ RowLayout {
         // When an item is selected, update the parameter manager
         onActivated: {
             var selectedValue = model[currentIndex].value;
-           // console.log("Parameter path:", displayData.path, ", value:", selectedValue);
+         // console.log("Parameter path:", displayData.path, ", value:", selectedValue);
             parameterManager.UpdateParameter(displayData.path, selectedValue, displayData.type);
         }
 

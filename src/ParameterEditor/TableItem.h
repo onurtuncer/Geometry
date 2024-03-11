@@ -41,7 +41,7 @@ private:
     TableItem* Child(int row);
 
 private:
-    QVariant           m_ItemData;
+    QVariant            m_ItemData;
     TableItem*          m_ParentItem;
     QVector<TableItem*> m_ChildItems;
 };

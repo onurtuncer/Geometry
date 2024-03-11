@@ -152,10 +152,10 @@ public:
         case Ctrl::ParameterType::Float:
             wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<float>(variant.toFloat()));
             break;
-        case Controller::ParameterType::Char:
+        case Ctrl::ParameterType::Char:
             wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<char>(variant.toChar().toLatin1()));
             break;
-        case Controller::ParameterType::String:
+        case Ctrl::ParameterType::String:
             wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<std::string>(variant.toString().toStdString()));
             break;
         case Ctrl::ParameterType::PairDoubleDouble: {
@@ -195,13 +195,30 @@ public:
             break;
         }
         case Ctrl::ParameterType::RxPdoTypeEnum: {
-          wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<Ctrl::Ethercat::DS402::RxPdoTypeEnum>(static_cast<Ctrl::Ethercat::DS402::RxPdoTypeEnum>(variant.toInt())));
+          wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<DS402::RxPdoTypeEnum>(static_cast<DS402::RxPdoTypeEnum>(variant.toInt())));
           break;
        }
        case Ctrl::ParameterType::TxPdoTypeEnum: {
-          wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<Ctrl::Ethercat::DS402::TxPdoTypeEnum>(static_cast<Ctrl::Ethercat::DS402::TxPdoTypeEnum>(variant.toInt())));
+          wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<DS402::TxPdoTypeEnum>(static_cast<DS402::TxPdoTypeEnum>(variant.toInt())));
           break;
        }
+       case Ctrl::ParameterType::ModeOfOperation: {
+          wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<DS402::ModeOfOperation>(static_cast<DS402::ModeOfOperation>(variant.toInt())));
+          break;
+       }
+       case Ctrl::ParameterType::DeviceType: {
+          wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<Devices::SlaveType>(static_cast<Ctrl::Ethercat::Devices::SlaveType>(variant.toInt())));
+          break;
+       }
+       case Ctrl::ParameterType::ModeOfOperationVector: {
+          QVariantList list = variant.toList();
+          std::vector<DS402::ModeOfOperation> vector;
+          for (const QVariant& item : list) {
+            vector.push_back(static_cast<DS402::ModeOfOperation>(item.toInt()));
+          }
+          wrappedParameter = Ctrl::WrappedParameter(Ctrl::Parameter<std::vector<DS402::ModeOfOperation>>(vector));
+          break;
+        }
         // Handle other parameter types here
         default:
             qDebug() << "Unsupported parameter type, with type enumaration:" << type;

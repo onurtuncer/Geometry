@@ -19,7 +19,7 @@ RowLayout {
             stepSize: 1
             width: parent.width / 3
             onValueChanged: {
-                console.log("Parameter path:", displayData.path, ", value:", value);
+            //    console.log("Parameter path:", displayData.path, ", value:", value);
                 parameterManager.UpdateParameter(displayData.path, value, displayData.type);     
             }
         }

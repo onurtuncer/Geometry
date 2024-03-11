@@ -28,37 +28,10 @@ RowLayout {
                     updatedList.push(displayData.value[i]);
                 }
                 updatedList[index] = text; 
-                console.log("Parameter path:", displayData.path, ", updated values:", updatedList);
+             //   console.log("Parameter path:", displayData.path, ", updated values:", updatedList);
                 parameterManager.UpdateParameter(displayData.path, updatedList, displayData.type);
             }
         }
     }
     }
-
-    //     TextInput {
-    //         id: firstTextInput
-    //         text: displayData.value.length > 0 ? displayData.value[0].toString() : ""
-    //         width: parent.width / 3
-    //         horizontalAlignment: Text.AlignHCenter
-    //         verticalAlignment: Text.AlignVCenter
-    //         onTextChanged: {
-    //             var updatedPair = { first: text, second: secondTextInput.text };
-    //             console.log("Parameter path:", displayData.path, ", updated pair:", updatedPair);
-    //             parameterManager.UpdateParameter(displayData.path, updatedPair, displayData.type);
-    //         }
-    //     }
-
-    //     TextInput {
-    //         id: secondTextInput
-    //         text: displayData.value.length > 1 ? displayData.value[0].toString() : ""
-    //         width: parent.width / 3
-    //         horizontalAlignment: Text.AlignHCenter
-    //         verticalAlignment: Text.AlignVCenter
-    //         onTextChanged: {
-    //             var updatedPair = { first: firstTextInput.text, second: text };
-    //             console.log("Parameter path:", displayData.path, ", updated pair:", updatedPair);
-    //             parameterManager.UpdateParameter(displayData.path, updatedPair, displayData.type);
-    //         }
-    //     }
-    // }
 }

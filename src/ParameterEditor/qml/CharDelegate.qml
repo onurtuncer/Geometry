@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 RowLayout {
+  
     property var displayData
 
     Text {
@@ -26,7 +27,7 @@ RowLayout {
         // When an item is selected, update the parameter manager
         onActivated: {
             var asciiValue = currentText.charCodeAt(0); // Convert currentText to ASCII
-            console.log("Parameter path:", displayData.path, ", value:", asciiValue);
+         //   console.log("Parameter path:", displayData.path, ", value:", asciiValue);
             parameterManager.UpdateParameter(displayData.path, asciiValue, displayData.type);
         }
 
@@ -35,8 +36,8 @@ RowLayout {
             var asciiA = "A".charCodeAt(0);
             var value = displayData.value;
             var index = value - asciiA;
-            console.log("Value:", displayData.value);
-            console.log("Index:", index);
+        //    console.log("Value:", displayData.value);
+        //    console.log("Index:", index);
             currentIndex = index;
         }
     }

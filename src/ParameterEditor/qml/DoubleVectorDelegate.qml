@@ -16,14 +16,14 @@ RowLayout {
         model: displayData.value 
         delegate: TextInput {
             text: modelData.toString() 
-            validator: DoubleValidator { bottom: -9999999.0; top: 9999999.0; decimals: 2 }
+            validator: DoubleValidator { bottom: -9999999.0; top: 9999999.0; decimals: 3 }
             width: parent.width / 3
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             onTextChanged: {
                 var updatedList = displayData.value.slice(); // Create a copy of the original list
                 updatedList[index] = parseFloat(text); // Update the value at the current index
-                console.log("Parameter path:", displayData.path, ", updated values:", updatedList);
+            //    console.log("Parameter path:", displayData.path, ", updated values:", updatedList);
                 parameterManager.UpdateParameter(displayData.path, updatedList, displayData.type);
             }
         }
