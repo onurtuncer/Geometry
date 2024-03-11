@@ -1,15 +1,6 @@
 
 #include "TableItem.h"
 
-TableItem::TableItem()
-    : m_ItemData()
-    , m_ParentItem(nullptr)
-{}
-
-TableItem::TableItem(const QVariant& data)
-    : m_ItemData(data)
-    , m_ParentItem(nullptr)
-{}
 
 TableItem::~TableItem(){
 
@@ -48,16 +39,6 @@ TableItem* TableItem::Child(int row){
 int TableItem::ChildCount() const{
 
     return m_ChildItems.count();
-}
-
-const QVariant& TableItem::Data() const{
-
-    return m_ItemData;
-}
-
-void TableItem::SetData(const QVariant& data){
-
-    m_ItemData = data;
 }
 
 bool TableItem::IsLeaf() const{

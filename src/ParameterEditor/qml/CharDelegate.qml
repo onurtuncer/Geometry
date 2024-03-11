@@ -11,36 +11,33 @@ RowLayout {
         text: displayData.key 
     }
 
-    Repeater {
-        model: displayData.value.length // Use the length of the list as the model
-        delegate:  ComboBox {
-            id: modeComboBox
-            width: parent.width/8
-            model: [
-                { value: 0,  display: "N/A" },
-                { value: 1,  display: "Profiled Position" },
-                { value: 3,  display: "Profiled Velocity" },
-                { value: 4,  display: "Profiled Torque" },
-                { value: 6,  display: "Homing" },
-                { value: 8,  display: "Cyclic Synchronous Position" },
-                { value: 9,  display: "Cyclic Synchronous Velocity" },
-                { value: 10, display: "Cyclic Synchronous Torque" }
-            ]
-            textRole: "display"
-            editable: false 
+   ComboBox {
+      id: charComboBox
+      width: parent.width / 3
+      model: {
+        var modelList = [];
+        for (var i = 65; i <= 90; i++) {
+          modelList.push(String.fromCharCode(i)); 
+        }
+        return modelList;
+      }
+        editable: false 
 
-            // When an item is selected, update the parameter manager
-            onActivated: {
-                var selectedValue = model[currentIndex].value;
-                var updatedList = displayData.value.slice(); // Create a copy of the original list
-                updatedList[delegateIndex] = selectedValue; // Update the value at the current index
-                parameterManager.UpdateParameter(displayData.path, updatedList, displayData.type);
-            }
+        // When an item is selected, update the parameter manager
+        onActivated: {
+            var asciiValue = currentText.charCodeAt(0); // Convert currentText to ASCII
+         //   console.log("Parameter path:", displayData.path, ", value:", asciiValue);
+            parameterManager.UpdateParameter(displayData.path, asciiValue, displayData.type);
+        }
 
-            // Set the initial selection based on displayData.value
-            Component.onCompleted: {
-                currentIndex = displayData.value[delegateIndex];
-            }
+        // Set the initial selection based on displayData.value
+        Component.onCompleted: {
+            var asciiA = "A".charCodeAt(0);
+            var value = displayData.value;
+            var index = value - asciiA;
+        //    console.log("Value:", displayData.value);
+        //    console.log("Index:", index);
+            currentIndex = index;
         }
     }
 }

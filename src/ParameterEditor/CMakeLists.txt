@@ -18,6 +18,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Qml Quick)
 
 set(PROJECT_SOURCES
     main.cpp
+    AbstractItem.cpp
     TreeModel.cpp
     TreeItem.cpp
     TableItem.cpp

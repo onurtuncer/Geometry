@@ -2,28 +2,28 @@
 #ifndef QML_TABLEVIEW_TABLE_ITEM_H
 #define QML_TABLEVIEW_TABLE_ITEM_H
 
-#include <QVariant>
+#include "AbstractItem.h"
 
 /*!
  * This class represents a node of the TableModel.
  * The items are meant to be managed from the TableModel, thus is only allowed
  * to modify the stored data. Parenting and deletion are dealt from the TreeModel. 
  */
-class TableItem
-{
+class TableItem : public AbstractItem{
+
     friend class TableModel;
 
 public:
-    TableItem();
-    explicit TableItem(const QVariant& data);
+     TableItem()
+      : m_ParentItem(nullptr){};
+    explicit TableItem(const QVariant& data) 
+      : AbstractItem(data), m_ParentItem(nullptr){};
     ~TableItem();
 
-    const QVariant& Data() const;
-    void SetData(const QVariant& data);
-    int ChildCount() const;
-    int Row() const;
-    bool IsLeaf() const;
-    int Depth() const;
+    virtual int ChildCount() const override;
+    virtual int Row() const override;
+    virtual bool IsLeaf() const override;
+    virtual int Depth() const override;
     
     TableItem* GetChild(int row) const{
 
@@ -41,7 +41,6 @@ private:
     TableItem* Child(int row);
 
 private:
-    QVariant            m_ItemData;
     TableItem*          m_ParentItem;
     QVector<TableItem*> m_ChildItems;
 };
