@@ -1,6 +1,7 @@
 #ifndef QPARAMETERMANAGER_H
 #define QPARAMETERMANAGER_H
 
+#include <vector>
 #include <QObject>
 #include <QtQml>
 #include "ParameterManager.h"
@@ -14,6 +15,9 @@ public:
     static QParameterManager* Instance();
 
     Q_INVOKABLE void UpdateParameter(const QString& path, const QVariant& value, const int type);
+
+    std::vector<std::pair<std::string, Controller::WrappedParameter>> GetToolParameters() const;
+    std::vector<std::string> GetToolNames() const;
 
 signals:
     void ParameterUpdated(const QString& path, const QVariant& value);
