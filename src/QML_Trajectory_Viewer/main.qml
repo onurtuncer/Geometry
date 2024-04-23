@@ -17,6 +17,7 @@ Window {
     }
 
     Vtk.VtkTrajectoryItem {
+        id: vtkItem
         anchors.fill: parent
         anchors.margins: 10
         opacity: 1.0
