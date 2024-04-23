@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-set(MYNAME HighlightPickedActor)
+set(MYNAME qmlTrajectoryViewer)
 
 project(${MYNAME} VERSION 0.1 LANGUAGES C CXX)
 
@@ -17,7 +17,7 @@ find_package(Qt5 REQUIRED COMPONENTS Core Quick)
 set(PROJECT_SOURCES
         main.cpp
         QQuickVtkItem.cpp
-        MyVtkItem.cpp
+        VtkTrajectoryItem.cpp
         qml.qrc)
 
 add_executable(${MYNAME} ${PROJECT_SOURCES})
@@ -37,4 +37,3 @@ vtk_module_autoinit( TARGETS ${MYNAME} MODULES ${VTK_LIBRARIES} )
 
 message (STATUS "VTK_VERSION: ${VTK_VERSION}")
 message (STATUS "VTK_DIR: ${VTK_DIR}")
-

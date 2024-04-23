@@ -1,5 +1,5 @@
 
-#include "MyVtkItem.h"
+#include "VtkTrajectoryItem.h"
 
 #include <vtkActor.h>
 #include <vtkInteractorStyleTrackballCamera.h>
@@ -21,8 +21,7 @@
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
-#include <vtkRenderer.h>
-#include <vtkRenderWindow.h>
+
 #include <vtkRenderWindowInteractor.h>
 #include <vtkLineSource.h>
 #include <vtkArcSource.h>
@@ -245,22 +244,32 @@ struct MyVtkData : vtkObject
 vtkStandardNewMacro(MyVtkData);
 }
 
-QQuickVtkItem::vtkUserData MyVtkItem::initializeVTK(vtkRenderWindow *renderWindow)
+QQuickVtkItem::vtkUserData VtkTrajectoryItem::initializeVTK(vtkRenderWindow* renderWindow)
 {
+    if (renderWindow) {
+        m_RenderWindow = renderWindow; // Assign the render window pointer to the member variable
+
+           if(m_Renderer){
+          // Create a renderer and add it to the render window
+            m_Renderer = vtkSmartPointer<vtkRenderer>::New();
+            m_RenderWindow->AddRenderer(m_Renderer);
+          }
+    }   
+
     auto vtk = vtkNew<MyVtkData>();
 
     vtkNew<vtkNamedColors> colors;
-
+/* 
     // A renderer and render window
-    vtkNew<vtkRenderer> renderer;
-//remove    vtkNew<vtkRenderWindow> renderWindow;
-    renderWindow->SetSize(640, 480);
-    renderWindow->AddRenderer(renderer);
+    vtkNew<vtkRenderer> renderer; */
+
+    renderWindow->SetSize(320, 240);
+    renderWindow->AddRenderer(m_Renderer);
     renderWindow->SetWindowName("HighlightPickedActor");
 
     // Set the custom type to use for interaction.
     vtkNew<MouseInteractorHighLightActor> style;
-    style->SetDefaultRenderer(renderer);
+    style->SetDefaultRenderer(m_Renderer);
 
     renderWindow->GetInteractor()->SetInteractorStyle(style);
 
@@ -284,14 +293,14 @@ QQuickVtkItem::vtkUserData MyVtkItem::initializeVTK(vtkRenderWindow *renderWindo
 
     // // Create renderer and add geometric primitives
     // vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
-    renderer->AddActor(lineSegment);
-    renderer->AddActor(circle);
-    renderer->AddActor(arc);
+    m_Renderer->AddActor(lineSegment);
+    m_Renderer->AddActor(circle);
+    m_Renderer->AddActor(arc);
 
-    // Create cylinder
-    double tipOrientation[3] = {0.707, 0.707, 0.0}; // Example: pointing in the X direction
-    renderCylinderWithPoseAndColor(renderer, 0.2, 3.0, 1.0, 1.0, 1.0, tipOrientation, 1.0, 0.0, 0.0);  // Red cylinder at origin
+    // // Create cylinder
+    // double tipOrientation[3] = {0.707, 0.707, 0.0}; // Example: pointing in the X direction
+    // renderCylinderWithPoseAndColor(renderer, 0.2, 3.0, 1.0, 1.0, 1.0, tipOrientation, 1.0, 0.0, 0.0);  // Red cylinder at origin
 
-    renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
+    m_Renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
     return vtk;
 }

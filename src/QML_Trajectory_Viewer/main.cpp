@@ -2,10 +2,9 @@
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 #include <QSGRendererInterface>
-
 #include <QVTKRenderWindowAdapter.h>
 
-#include "MyVtkItem.h"
+#include "VtkTrajectoryItem.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +20,7 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<MyVtkItem>("Vtk", 1, 0, "MyVtkItem");
+    qmlRegisterType<VtkTrajectoryItem>("Vtk", 1, 0, "VtkTrajectoryItem");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));

@@ -285,9 +285,9 @@ QSGNode* QQuickVtkItem::updatePaintNode(QSGNode* node, UpdatePaintNodeData*)
 #endif
             n->setTexture(texture);
         } else if (!fb)
-            qWarning().nospace() << "QQuickVTKItem.cpp:" << __LINE__ << ", YIKES!!, Render() didn't create a FrameBuffer!?";
+            qWarning().nospace() << "QQuickVTKItem.cpp:" << __LINE__ << ", Render() didn't create a FrameBuffer!?";
         else
-            qWarning().nospace() << "QQuickVTKItem.cpp:" << __LINE__ << ", YIKES!!, Render() didn't create any ColorBufferAttachements to its FrameBuffer!?";
+            qWarning().nospace() << "QQuickVTKItem.cpp:" << __LINE__ << ", Render() didn't create any ColorBufferAttachements to its FrameBuffer!?";
 
     }
 

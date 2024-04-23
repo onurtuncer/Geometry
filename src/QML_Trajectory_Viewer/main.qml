@@ -16,17 +16,17 @@ Window {
 
     }
 
-    Vtk.MyVtkItem {
+    Vtk.VtkTrajectoryItem {
         anchors.fill: parent
         anchors.margins: 10
-        opacity: 0.7
+        opacity: 1.0
     }
 
-    Rectangle {
-      anchors.centerIn: parent
-      width: 50
-      height: 50
-      color: "cyan"
-      opacity: 0.7
-    }
+    // Rectangle {
+    //   anchors.centerIn: parent
+    //   width: 50
+    //   height: 50
+    //   color: "cyan"
+    //   opacity: 0.7
+    // }
 }
