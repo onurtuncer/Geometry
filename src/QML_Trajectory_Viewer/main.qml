@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 
-import Vtk 1.0 as Vtk
+import Vtk 1.0 
 
 Window {
     width: 640
@@ -16,18 +16,21 @@ Window {
 
     }
 
-    Vtk.VtkTrajectoryItem {
-        id: vtkItem
+    Item{
         anchors.fill: parent
-        anchors.margins: 10
-        opacity: 1.0
+        // Instantiate VtkTrajectoryItem from C++ side
+        VtkTrajectoryItem {
+            id: vtkItem
+            anchors.fill: parent
+            // You can set properties or bindings here if needed
+        }
     }
 
-    // Rectangle {
-    //   anchors.centerIn: parent
-    //   width: 50
-    //   height: 50
-    //   color: "cyan"
-    //   opacity: 0.7
+    // VtkTrajectoryItem {
+    //     id: vtkItem
+    //     anchors.fill: parent
+    //     anchors.margins: 10
+    //     opacity: 1.0
     // }
+
 }

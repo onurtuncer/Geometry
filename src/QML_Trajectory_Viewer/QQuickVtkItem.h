@@ -20,6 +20,22 @@ public:
     explicit QQuickVtkItem(QQuickItem* parent = nullptr);
     ~QQuickVtkItem() override;
 
+
+    //***********
+
+    void startRendering() {
+    shouldStopRendering = false;
+    update();
+}
+
+    void stopRendering() {
+      shouldStopRendering = true;
+      qDebug() << "Stop Rendering Flag Set to True";
+      update();
+    }
+
+    //******************
+
     using vtkUserData = vtkSmartPointer<vtkObject>;
 
     /**
@@ -81,4 +97,6 @@ private:
     Q_DISABLE_COPY(QQuickVtkItem)
     Q_DECLARE_PRIVATE(QQuickVtkItem)
     QScopedPointer<QQuickVtkItemPrivate> d_ptr;
+
+    bool shouldStopRendering{false};
 };

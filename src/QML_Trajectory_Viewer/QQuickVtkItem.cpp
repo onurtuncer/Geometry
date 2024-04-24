@@ -115,6 +115,22 @@ public:
         qsgnode_set_description(this, QStringLiteral("vtknode"));
     }
 
+    //******
+
+    void disconnectRenderingSignals() {
+      qDebug() << "Disconnecting Rendering Signals";
+      disconnect(m_window, &QQuickWindow::beforeRendering, this, &QSGVtkObjectNode::render);
+      disconnect(m_window, &QQuickWindow::screenChanged, this, &QSGVtkObjectNode::handleScreenChange);
+    }
+
+    void reconnectRenderingSignals() {
+      connect(m_window, &QQuickWindow::beforeRendering, this, &QSGVtkObjectNode::render);
+      connect(m_window, &QQuickWindow::screenChanged, this, &QSGVtkObjectNode::handleScreenChange);
+    }
+
+    /**************/
+
+
     ~QSGVtkObjectNode()
     {
         delete QSGVtkObjectNode::texture();
@@ -160,6 +176,7 @@ public:
         vtkWindow->SetForceMaximumHardwareLineWidth(1);
         vtkWindow->SetOwnContext(false);
         vtkWindow->OpenGLInitContext();
+
     }
 
     void scheduleRender()
@@ -221,7 +238,33 @@ protected:
 
 QSGNode* QQuickVtkItem::updatePaintNode(QSGNode* node, UpdatePaintNodeData*)
 {
+    qDebug() << "Updating Paint Node";
     auto* n = static_cast<QSGVtkObjectNode*>(node);
+
+    //  if (shouldStopRendering) {
+    //     qDebug() << "Rendering Stopped";
+    //     return nullptr;
+    // }
+
+    // Check if rendering should be stopped *******************
+    if (shouldStopRendering) {
+        qDebug() << "Rendering Stopped";
+        if (n) {
+            n->disconnectRenderingSignals();
+        }
+        return nullptr;
+    }
+
+     // Rendering should resume
+    if (!n) {
+        n = new QSGVtkObjectNode;
+        n->initialize(this);
+        n->m_window = window();
+        n->m_item = this;
+        n->reconnectRenderingSignals(); // Reconnect the signals
+    }
+
+    // *********************************************************
     
     // Don't create the node if our size is invalid
     if (!n && (width() <= 0 || height() <= 0))
@@ -589,6 +632,7 @@ bool QQuickVtkItem::event(QEvent * ev)
 
     return true;
 }
+
 
 #include "QQuickVtkItem.moc"
 #include "moc_QQuickVtkItem.cpp"

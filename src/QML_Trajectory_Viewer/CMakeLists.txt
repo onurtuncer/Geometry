@@ -16,6 +16,7 @@ find_package(Qt5 REQUIRED COMPONENTS Core Quick)
 
 set(PROJECT_SOURCES
         main.cpp
+        VtkToolPath.cpp 
         QQuickVtkItem.cpp
         VtkTrajectoryItem.cpp
         qml.qrc)
