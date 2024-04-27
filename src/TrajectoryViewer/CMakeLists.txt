@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-set(MYNAME HighlightPickedActor)
+set(MYNAME TrajectoryViewer)
 
 project(${MYNAME} VERSION 0.1 LANGUAGES CXX)
 
@@ -12,7 +12,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Quick)
-
 find_package(VTK 9.3)
 
 if (NOT VTK_FOUND OR VTK_VERSION VERSION_LESS "9.3.0")
@@ -23,39 +22,10 @@ endif()
 set(PROJECT_SOURCES
         main.cpp
         QQuickVtkItem.cpp
-        MyVtkItem.cpp
         VtkViewer.cpp
+        TrajectoryViewer.cpp
         qml.qrc
 )
-
-# if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-#     qt_add_executable(${MYNAME}
-#         MANUAL_FINALIZATION
-#         ${PROJECT_SOURCES}
-#     )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET ${MYNAME} APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-# else()
-#     if(ANDROID)
-#         add_library(${MYNAME} SHARED
-#             ${PROJECT_SOURCES}
-#         )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    # else()
-  add_executable(${MYNAME}  ${PROJECT_SOURCES})
-#     endif()
-# endif()
-
-target_link_libraries(${MYNAME}
-                                 PRIVATE Qt6::Core 
-                                         Qt6::Quick)
-
-# install(TARGETS ${MYNAME}
-#     BUNDLE DESTINATION .
-#     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_import_qml_plugins(${MYNAME})
@@ -68,8 +38,15 @@ get_filename_component(QT_TOP "../../.."
 )
 
 
+add_executable(${MYNAME}  ${PROJECT_SOURCES})
 
-target_link_libraries(${MYNAME} PRIVATE ${VTK_LIBRARIES})
+
+target_link_libraries(${MYNAME}
+                                 PRIVATE Qt6::Core 
+                                         Qt6::Quick
+                                         ${VTK_LIBRARIES})
+
+# target_link_libraries(${MYNAME} PRIVATE ${VTK_LIBRARIES})
 vtk_module_autoinit( TARGETS ${MYNAME} MODULES ${VTK_LIBRARIES} )
 
 # if(WIN32)
