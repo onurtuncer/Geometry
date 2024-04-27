@@ -160,18 +160,18 @@ QQuickVtkItem::vtkUserData MyVtkItem::initializeVTK(vtkRenderWindow *renderWindo
 
        auto vtk = vtkNew<MyVtkData>();
 
-       // Create a cone pipeline and add it to the view
-       vtkNew<vtkRenderer> renderer;
-       vtkNew<vtkActor> actor;
-       vtkNew<vtkPolyDataMapper> mapper;
-       vtkNew<vtkConeSource> cone;
-       renderWindow->AddRenderer(renderer);
-       mapper->SetInputConnection(cone->GetOutputPort());
-       actor->SetMapper(mapper);
-       renderer->AddActor(actor);
-       renderer->ResetCamera();
-       renderer->SetBackground2(0.7, 0.7, 0.7);
-       renderer->SetGradientBackground(true);
+    //    // Create a cone pipeline and add it to the view
+    //    vtkNew<vtkRenderer> renderer;
+    //    vtkNew<vtkActor> actor;
+    //    vtkNew<vtkPolyDataMapper> mapper;
+    //    vtkNew<vtkConeSource> cone;
+    //    renderWindow->AddRenderer(renderer);
+    //    mapper->SetInputConnection(cone->GetOutputPort());
+    //    actor->SetMapper(mapper);
+    //    renderer->AddActor(actor);
+    //    renderer->ResetCamera();
+    //    renderer->SetBackground2(0.7, 0.7, 0.7);
+    //    renderer->SetGradientBackground(true);
    
        return vtk;
 }

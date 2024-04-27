@@ -46,7 +46,12 @@ public:
         vtkRenderWindow* renderWindow = vtkGenericOpenGLRenderWindow::SafeDownCast(instance);
         qDebug() << "Window ptr =" << renderWindow;
         auto renderers = renderWindow->GetRenderers();
-        
+
+        renderWindow->AddRenderer(m_renderer); // Check if this needs to be replaced with a raw pointer
+
+        m_renderer->SetBackground(0.0, 0.0, 0.0);
+        m_renderer->SetBackground2(0.7, 0.7, 0.7);
+        m_renderer->SetGradientBackground(true);
     }
 
     vtkUserData initializeVTK(vtkRenderWindow *renderWindow) override;
