@@ -1,4 +1,9 @@
+/* ----------------------------------------------------------------------------*
+  Copyright 2024 MILTEKSAN
 
+  Written by Melina Aero, Istanbul, Turkey
+  Contact onur.tuncer@melina-aero.com
+-------------------------------------------------------------------------------*/
 
 #include <vtkActor.h>
 #include <vtkInteractorStyleTrackballCamera.h>
@@ -81,6 +86,5 @@ vtkStandardNewMacro(VtkViewerData);
 QQuickVtkItem::vtkUserData VtkViewer::initializeVTK(vtkRenderWindow* renderWindow){
 
     qDebug() << "VtkViewer::initializeVTK called";
-    auto vtk = vtkNew<VtkViewerData>(); 
-    return vtk;
+    return nullptr;
 }

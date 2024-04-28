@@ -1,3 +1,10 @@
+/* ----------------------------------------------------------------------------*
+  Copyright 2024 MILTEKSAN
+
+  Written by Melina Aero, Istanbul, Turkey
+  Contact onur.tuncer@melina-aero.com
+-------------------------------------------------------------------------------*/
+
 #ifndef VTK_VIEWER_H
 #define VTK_VIEWER_H
 
@@ -36,10 +43,22 @@ class VtkViewer : public QQuickVtkItem{
 
     auto Renderer() -> vtkSmartPointer<vtkRenderer> {return m_Renderer;}
     void Refresh() {this->scheduleRender();}
-    void ChangeBackGroundColor(double r, double g, double b) {
+    void SetBackGround(double r, double g, double b) {
 
         m_Renderer->SetBackground(r, g, b);
         Refresh();
+    }
+
+     void SetBackGround2(double r, double g, double b) {
+
+        m_Renderer->SetBackground2(r, g, b);
+        Refresh();
+    }
+
+    void SetGradientBackground(bool flag) {
+      
+      m_Renderer->SetGradientBackground(flag);
+      Refresh();
     }
 
   private:
@@ -48,7 +67,7 @@ class VtkViewer : public QQuickVtkItem{
       m_Camera = vtkSmartPointer<vtkCamera>::New();
       m_Renderer->SetActiveCamera(m_Camera);  
     }
-    
+
     vtkUserData initializeVTK(vtkRenderWindow* renderWindow) override;
 
   private:

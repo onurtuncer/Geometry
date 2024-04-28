@@ -1,3 +1,13 @@
+
+
+
+/* ----------------------------------------------------------------------------*
+  Copyright 2024 MILTEKSAN
+
+  Written by Melina Aero, Istanbul, Turkey
+  Contact onur.tuncer@melina-aero.com
+-------------------------------------------------------------------------------*/
+
 #pragma once
 
 #include <QtQuick/QQuickItem>
