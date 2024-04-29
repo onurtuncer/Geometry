@@ -28,9 +28,9 @@ class TrajectoryViewer : public QObject{
     void    SetToolHeight(const double height);
     double  GetToolHeight() const;
     void    SetToolPosition(const double x, const double y, const double z);
-    void    SetToolPosition(double position[3])
-
+    void    SetToolPosition(const double (&position)[3]);
     void    SetToolOrientation(const double i, const double j, const double k);
+    void    SetToolOrientation(const double (&orientation)[3]);
     void    SetToolColor(const double r, const double g, const double b);
     void    SetToolPathColor(const double r, const double g, const double b);
     const double* GetToolPosition() const;
@@ -48,6 +48,8 @@ class TrajectoryViewer : public QObject{
 
     Q_INVOKABLE void ShowTool();
     Q_INVOKABLE void HideTool();
+
+    void UpdateToolTip();
 
     void AddLine(double startPoint[3], double endPoint[3], bool green = false);
     void AddCircle(double center[3], double radius, double normal[3]);

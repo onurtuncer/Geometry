@@ -54,11 +54,21 @@ void TrajectoryViewer::SetToolPosition(const double x, const double y, const dou
     m_ToolPosition[2] = z;
 }
 
+void TrajectoryViewer::SetToolPosition(const double (&position)[3]) {
+
+    std::copy(position, position + 3, m_ToolPosition);
+}
+
 void TrajectoryViewer::SetToolOrientation(const double i, const double j, const double k) {
 
     m_ToolOrientation[0] = i;
     m_ToolOrientation[1] = j;
     m_ToolOrientation[2] = k;
+}
+
+void TrajectoryViewer::SetToolOrientation(const double (&orientation)[3]) {
+
+    std::copy(orientation, orientation + 3, m_ToolOrientation);
 }
 
 void TrajectoryViewer::SetToolColor(const double r, const double g, const double b) {
@@ -222,6 +232,16 @@ void TrajectoryViewer::HideTool(){
 
         qWarning("Viewer is not initialized");
     }
+}
+
+void TrajectoryViewer::UpdateToolTip() {
+
+    if (m_ToolActor) {
+
+      UpdateToolPose();
+      UpdateCamera();
+   } 
+
 }
 
 void TrajectoryViewer::AddLine(double startPoint[3], double endPoint[3], bool green) {

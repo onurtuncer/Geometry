@@ -10,8 +10,8 @@ void PrepareMockData(TrajectoryViewer& tv, VtkViewer* vtkviewer) {
 
   tv.SetToolPosition(0.0, 0.0, 0.0);
   tv.SetToolOrientation(0.0, 0.0, 1.0);
-  tv.SetToolDiameter(0.15);
-  tv.SetToolHeight(0.1);
+  tv.SetToolDiameter(0.2);
+  tv.SetToolHeight(5);
   tv.SetToolColor(1.0, 0.0, 0.0);
 
   tv.SetViewer(vtkviewer);
@@ -47,7 +47,7 @@ void PrepareMockData(TrajectoryViewer& tv, VtkViewer* vtkviewer) {
   double p19[3] = {5, 5, 0};
   double p20[3] = {5, 1, 0};
   double p21[3] = {5, 1, -1};
-  double p22[4] = {5, 5, -1};  
+  double p22[3] = {5, 5, -1};  
   double c5[3] = {10, 2, -3};
   double c6[3] = {10, 4, -3};
   double c7[3] = {0, 4, -3};
@@ -82,6 +82,7 @@ void PrepareMockData(TrajectoryViewer& tv, VtkViewer* vtkviewer) {
 
   tv.SetToolOrientation(n1);
   tv.SetToolPosition(p22);
+  tv.UpdateToolTip();
     
 }
 

@@ -12,7 +12,7 @@ Window {
     Rectangle {
       anchors.fill: parent
       color: "yellow"
-      opacity: 0.2
+      opacity: 0.5
 
     }
 
@@ -20,14 +20,7 @@ Window {
         anchors.fill: parent
         objectName: "viewer"
         anchors.margins: 10
-        opacity: 0.7
+        opacity: 1.0
     }
 
-    Rectangle {
-      anchors.centerIn: parent
-      width: 50
-      height: 50
-      color: "cyan"
-      opacity: 0.7
-    }
 }
