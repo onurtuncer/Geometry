@@ -17,11 +17,27 @@
 #include <vtkProperty.h>
 #include <vtkTransform.h> 
 
+#include <vtkPolyLine.h>
+#include <vtkPoints.h>
+#include <vtkCellArray.h>
+#include <vtkPolyData.h>
+
+#include <vtkBoundingBox.h>
+
 #include "TrajectoryViewer.h"
 #include "VtkViewer.h"
 
-TrajectoryViewer::TrajectoryViewer(QObject* parent) : QObject(parent), m_Viewer(nullptr) {
-   
+TrajectoryViewer::TrajectoryViewer(QObject* parent) : QObject(parent), 
+                                                      m_Viewer(nullptr) {
+
+//   CreateToolPath();
+}
+
+TrajectoryViewer::TrajectoryViewer(VtkViewer* viewer, QObject* parent)
+                                                     : m_Viewer(viewer), 
+                                                       QObject(parent) {
+
+//   CreateToolPath();
 }
 
 void TrajectoryViewer::SetViewer(VtkViewer* viewer) {
@@ -40,10 +56,12 @@ double TrajectoryViewer::GetToolDiameter() const {
 }
 
 void TrajectoryViewer::SetToolHeight(const double height) {
+
     m_ToolHeight = height;
 }
 
 double TrajectoryViewer::GetToolHeight() const {
+
     return m_ToolHeight;
 }
 
@@ -310,6 +328,41 @@ void TrajectoryViewer::AddArc(double center[3], double start[3], double end[3], 
     m_Viewer->Renderer()->AddActor(actor);
 }
 
+void TrajectoryViewer::CreateToolPath() {
+   
+    m_ToolPath = vtkSmartPointer<vtkPolyLine>::New();
+    
+    m_Lines = vtkSmartPointer<vtkCellArray>::New();
+    m_Lines->InsertNextCell(m_ToolPath);
+
+    // Create polydata and add the points and lines to it
+    m_PolyData = vtkSmartPointer<vtkPolyData>::New();
+    m_PolyData->SetPoints(m_ToolPathPoints);
+    m_PolyData->SetLines(m_Lines);
+
+    // Create mapper and actor for the polyline
+    m_Mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    m_Mapper->SetInputData(m_PolyData);
+
+    m_ToolPathActor = vtkSmartPointer<vtkActor>::New();
+    m_ToolPathActor->SetMapper(m_Mapper);
+
+    // Set color for the polyline
+    m_ToolPathActor->GetProperty()->SetColor(m_ToolPathColor[0], m_ToolPathColor[1], m_ToolPathColor[2]);
+
+    m_Viewer->Renderer()->AddActor(m_ToolPathActor);
+}
+
+void TrajectoryViewer::AddPointsToToolPath(const std::vector<std::array<double, 3>>& points) {
+
+  for (const auto& point : points) {
+
+    m_ToolPathPoints->InsertNextPoint(point.data());
+  }
+
+  m_ToolPathPoints->Modified();
+}
+
 void TrajectoryViewer::UpdateCamera() {
     
     double bounds[6];
@@ -345,5 +398,6 @@ void TrajectoryViewer::UpdateCamera() {
     // Set camera position and focal point
     m_Viewer->Renderer()->GetActiveCamera()->SetPosition(cameraPosition);
     m_Viewer->Renderer()->GetActiveCamera()->SetFocalPoint(focalPoint);   
-    m_Viewer->Renderer()->ResetCameraClippingRange(); // Adjusts the clipping range of the camera  
+    m_Viewer->Renderer()->ResetCameraClippingRange(); 
 } 
+

@@ -14,11 +14,20 @@
 #include <vtkAxesActor.h>
 
 class VtkViewer;
+class vtkCellArray;
+class vtkPoints;
+class vtkPolyData;
+class vtkPolyDataMapper;
+class vtkActor;
+class vtkPolyLine;
+class vtkPolyDataNormals;
+
 class TrajectoryViewer : public QObject{
   Q_OBJECT
 
   public:
     explicit TrajectoryViewer(QObject* parent = nullptr);
+    explicit TrajectoryViewer(VtkViewer* viewer, QObject* parent = nullptr);
     virtual ~TrajectoryViewer() = default;
 
     void SetViewer(VtkViewer* viewer);
@@ -54,14 +63,17 @@ class TrajectoryViewer : public QObject{
     void AddLine(double startPoint[3], double endPoint[3], bool green = false);
     void AddCircle(double center[3], double radius, double normal[3]);
     void AddArc(double center[3], double start[3], double end[3], double normal[3]);
+  
+    void AddPointsToToolPath(const std::vector<std::array<double, 3>>& points);
 
   private:
     void CreateToolActor();
     void UpdateToolPose();
     void UpdateCamera();
+    void CreateToolPath();
 
   private:
-    VtkViewer* m_Viewer;
+    VtkViewer*                    m_Viewer;
     vtkSmartPointer<vtkAxesActor> m_AxesActor; 
 
   private:
@@ -70,9 +82,16 @@ class TrajectoryViewer : public QObject{
     double     m_ToolPosition[3] = {0, 0, 0};
     double     m_ToolOrientation[3] = {0, 0, 1.0};
     double     m_ToolColor[3] = {1.0, 0.0, 0.0};  
-    double     m_ToolPathColor[3] = {1, 1, 1};            
+    double     m_ToolPathColor[3] = {1, 1, 1};          
 
-    vtkSmartPointer<vtkActor> m_ToolActor;   
+    vtkSmartPointer<vtkActor>    m_ToolActor;   
+    vtkSmartPointer<vtkPolyLine> m_ToolPath; 
+    vtkSmartPointer<vtkPoints>   m_ToolPathPoints;
+    vtkSmartPointer<vtkActor>    m_ToolPathActor;   
+
+    vtkSmartPointer<vtkCellArray>      m_Lines;
+    vtkSmartPointer<vtkPolyData>       m_PolyData;
+    vtkSmartPointer<vtkPolyDataMapper> m_Mapper;
 };
 
 #endif // TRAJECTORY_VIEWER_H
